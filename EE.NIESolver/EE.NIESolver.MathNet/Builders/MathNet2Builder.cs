@@ -51,12 +51,15 @@ namespace EE.NIESolver.MathNet
             return this;
         }
 
-        IMathNet2BuilderWithBorders IMathNet2BuilderWithRightBorder.SetLeftBorder(Func<double, double> rightBorder) => SetLeftBorder(rightBorder);
-        IMathNet2BuilderWithBorders IMathNet2BuilderWithLeftBorder.SetRightBorder(Func<double, double> leftBorder) => SetRightBorder(leftBorder);
+        IMathNet2BuilderWithBorders IMathNet2BuilderWithRightBorder.SetLeftBorder(Func<double, double> rightBorder) =>
+            SetLeftBorder(rightBorder);
+
+        IMathNet2BuilderWithBorders IMathNet2BuilderWithLeftBorder.SetRightBorder(Func<double, double> leftBorder) =>
+            SetRightBorder(leftBorder);
 
         public IMathNet2BuilderComplete WithParams(double h, double d)
         {
-            _params.Add(Tuple.Create(h,d));
+            _params.Add(Tuple.Create(h, d));
             return this;
         }
 
