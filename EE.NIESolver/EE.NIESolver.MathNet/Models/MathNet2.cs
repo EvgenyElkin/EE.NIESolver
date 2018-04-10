@@ -44,7 +44,7 @@ namespace EE.NIESolver.MathNet
             MaxX = maxX;
             MaxT = maxT;
             H = h;
-            D = d / 2;
+            D = d;
             Width = (int)(maxX / h);
             Height = (int)(maxT / d);
             _net = new double[Width + 1, Height + 1];

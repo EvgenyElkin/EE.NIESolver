@@ -1,7 +1,7 @@
 // ReSharper disable once CheckNamespace
 namespace EE.NIESolver.MathNet
 {
-    public class MathNet2Pointer : IMathNet2Pointer
+    public class MathNet2Pointer : I2Pointer
     {
         private readonly MathNet2 _net;
         private int _i;
@@ -28,20 +28,20 @@ namespace EE.NIESolver.MathNet
             return _net.Get(_i + di, _j + dj);
         }
 
-        public double GetLeft(int value = 1) => GetValue(-value, 0);
-        public double GetRight(int value = 1) => GetValue(value, 0);
-        public double GetTop(int value = 1) => GetValue(0, value);
-        public double GetDown(int value = 1) => GetValue(0, -value);
+        public double GetLeft(uint value = 1) => GetValue(-(int) value, 0);
+        public double GetRight(uint value = 1) => GetValue((int) value, 0);
+        public double GetTop(uint value = 1) => GetValue(0, (int) value);
+        public double GetDown(uint value = 1) => GetValue(0, -(int) value);
 
         public MathNet2Pointer To(int dx, int dy)
         {
-            Set(_i+dx, _j + dy);
+            Set(_i + dx, _j + dy);
             return this;
         }
 
-        public MathNet2Pointer ToLeft(int value = 1) => To(-value, 0);
-        public MathNet2Pointer ToRight(int value = 1) => To(value, 0);
-        public MathNet2Pointer ToTop(int value = 1) => To(0, value);
-        public MathNet2Pointer ToDown(int value = 1) => To(0, -value);
+        public MathNet2Pointer ToLeft(uint value = 1) => To(-(int) value, 0);
+        public MathNet2Pointer ToRight(uint value = 1) => To((int) value, 0);
+        public MathNet2Pointer ToTop(uint value = 1) => To(0, (int) value);
+        public MathNet2Pointer ToDown(uint value = 1) => To(0, -(int) value);
     }
 }
