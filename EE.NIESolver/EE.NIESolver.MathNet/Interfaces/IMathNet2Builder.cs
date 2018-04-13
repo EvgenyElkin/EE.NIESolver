@@ -11,7 +11,7 @@ namespace EE.NIESolver.MathNet
     {
         IMathNet2BuilderWithArea SetArea(double maxX, double maxY);
     }
-
+    
     public interface IMathNet2BuilderWithArea
     {
         IMathNet2BuilderWithInitialConditions SetInitialConditions(Func<double, double> initialConditions);
@@ -37,6 +37,7 @@ namespace EE.NIESolver.MathNet
     {
         MathNet2 Build(double h, double d);
         IMathNet2BuilderComplete WithParams(double h, double d);
+        IMathNet2BuilderWithHistory SetHistory(double historySize, Func<double, double, double> history);
     }
 
     public interface IMathNet2BuilderComplete
@@ -44,4 +45,18 @@ namespace EE.NIESolver.MathNet
         IMathNet2BuilderComplete WithParams(double h, double d);
         IEnumerable<MathNet2> Build();
     }
+
+    public interface IMathNet2BuilderWithHistory
+    {
+        IMathNet2BuilderWithHistoryComplete WithParams(double h, double d);
+        MathNet2WithHistory Build(double h, double d);
+    }
+
+    public interface IMathNet2BuilderWithHistoryComplete
+    {
+        IMathNet2BuilderWithHistoryComplete WithParams(double h, double d);
+        IEnumerable<MathNet2WithHistory> Build();
+    }
+
+   
 }

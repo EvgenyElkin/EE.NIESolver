@@ -1,27 +1,32 @@
-﻿// ReSharper disable once CheckNamespace
+﻿using System;
+
+// ReSharper disable once CheckNamespace
 namespace EE.NIESolver.MathNet
 {
     public class MathNet2
     {
-        private readonly double[,] _net;
+        protected readonly double[,] _net;
 
         /// <summary>
         /// Максимальное значение по пространству
         /// </summary>
         public double MaxX { get; }
+
         /// <summary>
         /// Максимальное значение по времени
         /// </summary>
         public double MaxT { get; }
+
         /// <summary>
         /// Шаг по пространству
         /// </summary>
         public double H { get; }
+
         /// <summary>
         /// Шаг по времени
         /// </summary>
         public double D { get; }
-        
+
         /// <summary>
         /// Размер сетки по пространству
         /// </summary>
@@ -45,8 +50,8 @@ namespace EE.NIESolver.MathNet
             MaxT = maxT;
             H = h;
             D = d;
-            Width = (int)(maxX / h);
-            Height = (int)(maxT / d);
+            Width = (int) (maxX / h);
+            Height = (int) (maxT / d);
             _net = new double[Width + 1, Height + 1];
         }
 
@@ -56,8 +61,13 @@ namespace EE.NIESolver.MathNet
         /// <param name="i">Номер ячейки по пространству</param>
         /// <param name="j">Номер ячейки по времени</param>
         /// <param name="value">Значение</param>
-        public void Set(int i, int j, double value)
+        public virtual void Set(int i, int j, double value)
         {
+            if (i < 0 || i > Width || j < 0 || j > Height)
+            {
+                throw new ArgumentOutOfRangeException($"Элемент ({i},{j})  выходит за границу сетки {Width}x{Height}");
+            }
+
             _net[i, j] = value;
         }
 
@@ -67,9 +77,19 @@ namespace EE.NIESolver.MathNet
         /// <param name="i">Номер ячейки по пространству</param>
         /// <param name="j">Номер ячейки по времени</param>
         /// <returns>Значение сетки в i,j</returns>
-        public double Get(int i, int j)
+        public virtual double Get(int i, int j)
         {
+            if (i < 0 || i > Width || j < 0 || j > Height)
+            {
+                throw new ArgumentOutOfRangeException($"Элемент ({i},{j})  выходит за границу сетки {Width}x{Height}");
+            }
+
             return _net[i, j];
+        }
+
+        public virtual double[,] ToMatrix()
+        {
+            return _net;
         }
     }
 }
