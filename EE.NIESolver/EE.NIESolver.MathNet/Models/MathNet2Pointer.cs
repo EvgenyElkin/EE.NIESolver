@@ -32,6 +32,8 @@ namespace EE.NIESolver.MathNet
         public double GetRight(uint value = 1) => GetValue((int) value, 0);
         public double GetTop(uint value = 1) => GetValue(0, (int) value);
         public double GetDown(uint value = 1) => GetValue(0, -(int) value);
+        public double X => _net.H * _i;
+        public double T => _net.D * _j;
 
         public MathNet2Pointer To(int dx, int dy)
         {

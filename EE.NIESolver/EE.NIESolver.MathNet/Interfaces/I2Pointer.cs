@@ -8,5 +8,7 @@ namespace EE.NIESolver.MathNet
         double GetRight(uint value = 1);
         double GetTop(uint value = 1);
         double GetDown(uint value = 1);
+        double X { get; }
+        double T { get; }
     }
 }
