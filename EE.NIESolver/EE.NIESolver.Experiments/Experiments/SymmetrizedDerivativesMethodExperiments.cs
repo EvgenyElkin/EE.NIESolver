@@ -1,5 +1,6 @@
 using EE.NIESolver.MathNet;
 using System;
+using EE.NIESolver.MathNet.Services;
 using EE.NIESolver.Solver;
 using Xunit;
 using Xunit.Abstractions;
@@ -37,14 +38,15 @@ namespace EE.NIESolver.Experiments.Experiments
                 .Build((double) 1 / n, (double) 1 / n);
 
             var solver = new MathSolver(OneSpatialVariable_ConstantDelay_ExperimentFunction);
+            var history = new SymmetrizedDerivativesNetHistory(net, new LinearInterpolationService());
 
-            solver.Solve(net);
+            solver.Solve(net, history);
 
             AssertSolve(net, (x, t) => t * Math.Sin(Math.PI * x), expected);
         }
 
-        private static double OneSpatialVariable_ConstantDelay_ExperimentFunction(I2Pointer p) => 
-            Math.Sin(Math.PI * p.X) + Math.PI * p.T * Math.Cos(p.X) - (p.T - 1) * Math.Sin(Math.PI * p.X) + p.GetDown();
+        private static double OneSpatialVariable_ConstantDelay_ExperimentFunction(double x, double t, INetHistory u) => 
+            Math.Sin(Math.PI * x) + Math.PI * t * Math.Cos(x) - (t - 1) * Math.Sin(Math.PI * x) + u.Get(x, t - 1);
 
         #endregion
     }

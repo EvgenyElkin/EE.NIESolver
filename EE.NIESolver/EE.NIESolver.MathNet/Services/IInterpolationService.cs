@@ -2,7 +2,7 @@
 {
     public interface IInterpolationService
     {
-        double InterpolateX(I2Pointer p, double dx);
-        double InterpolateY(I2Pointer p, double dy);
+        double InterpolateHorizontal(MathNet2 net, double x, int j);
+        double InterpolateVertical(MathNet2 net, int i, double y);
     }
 }

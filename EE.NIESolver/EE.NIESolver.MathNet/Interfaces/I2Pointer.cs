@@ -11,4 +11,9 @@ namespace EE.NIESolver.MathNet
         double X { get; }
         double T { get; }
     }
+
+    public interface IHistoryProvider
+    {
+        double ExtractValue(double x, double y);
+    }
 }

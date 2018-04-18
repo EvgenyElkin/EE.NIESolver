@@ -1,8 +1,9 @@
 ﻿using EE.NIESolver.MathNet;
+using EE.NIESolver.MathNet.Services;
 
 namespace EE.NIESolver.Solver
 {
-    public delegate double OneVariableFunction(I2Pointer pointer);
+    public delegate double OneVariableFunction(double x, double t, INetHistory u);
 
     public class MathSolver
     {
@@ -13,8 +14,9 @@ namespace EE.NIESolver.Solver
             _func = function;
         }
 
-        public void Solve(MathNet2WithHistory net)
+        public void Solve(MathNet2WithHistory net, INetHistory history)
         {
+            history = new CachedNetHistoryDecorator(net, history);
             var p = new MathNet2Pointer(net);
             for (var j = 1; j <= net.Height; j++)
             {
@@ -22,7 +24,7 @@ namespace EE.NIESolver.Solver
                 {
                     p.Set(i, j);
 
-                    var value = (_func(p) * 2 * net.H * net.D - (net.H - net.D) * (p.GetDown() - p.GetLeft())) /
+                    var value = (_func(p.X + net.H/2, p.T + net.D / 2, history) * 2 * net.H * net.D - (net.H - net.D) * (p.GetDown() - p.GetLeft())) /
                                 (net.H + net.D) + p.GetValue(-1, -1);
                     net.Set(i, j, value);
                 }

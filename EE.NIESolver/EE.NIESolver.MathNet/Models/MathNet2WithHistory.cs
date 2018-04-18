@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 // ReSharper disable once CheckNamespace
 namespace EE.NIESolver.MathNet
@@ -60,6 +61,19 @@ namespace EE.NIESolver.MathNet
                 result[i, HistorySize + j] = _net[i, j];
             }
             return result;
+        }
+
+        public override IEnumerable<MathNet2Point> GetPoints()
+        {            
+            for (var j = 0; j < HistorySize; j++)
+            for (var i = 0; i <= Width; i++)
+            {
+                yield return new MathNet2Point { X = i * H, T = (j - 1) * D };
+            }
+            foreach (var point in base.GetPoints())
+            {
+                yield return point;
+            }
         }
     }
 }

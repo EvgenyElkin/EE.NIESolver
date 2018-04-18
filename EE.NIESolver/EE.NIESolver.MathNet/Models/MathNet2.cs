@@ -1,8 +1,40 @@
 ﻿using System;
+using System.Collections.Generic;
 
 // ReSharper disable once CheckNamespace
 namespace EE.NIESolver.MathNet
 {
+    public class MathNet2Point : IEquatable<MathNet2Point>
+    {
+        public int I;
+        public int J;
+        public double X { get; set; }
+        public double T { get; set; }
+
+        public bool Equals(MathNet2Point other)
+        {
+            if (ReferenceEquals(null, other)) return false;
+            if (ReferenceEquals(this, other)) return true;
+            return X.Equals(other.I) && T.Equals(other.J);
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj)) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            if (obj.GetType() != this.GetType()) return false;
+            return Equals((MathNet2Point) obj);
+        }
+
+        public override int GetHashCode()
+        {
+            unchecked
+            {
+                return (I.GetHashCode() * 397) ^ J.GetHashCode();
+            }
+        }
+    }
+
     public class MathNet2
     {
         protected readonly double[,] _net;
@@ -85,6 +117,15 @@ namespace EE.NIESolver.MathNet
             }
 
             return _net[i, j];
+        }
+
+        public virtual IEnumerable<MathNet2Point> GetPoints()
+        {
+            for (var j = 0; j <= Height; j++)
+            for (var i = 0; i <= Width; i++)
+            {
+                yield return new MathNet2Point {X = i * H, T = j * D, I = i, J = j};
+            }
         }
 
         public virtual double[,] ToMatrix()

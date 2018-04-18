@@ -18,25 +18,30 @@ namespace EE.NIESolver.MathNet.Tests.Services
 
         [Theory]
         //Дискретные значения
-        [InlineData(0, 0, 5, 10, 5)]
-        [InlineData(0, 1, 5, 10, 10)]
-        [InlineData(-1, -1, 10, 5, 10)]
-        //Правая интерполяция
-        [InlineData(0, 0.5, 5, 10, 7.5)]
-        [InlineData(0, 0.1, 5, 10, 5.5)]
-        [InlineData(0, 0.9, 5, 10, 9.5)]
-        [InlineData(2, 2.1, 5, 10, 5.5)]
-        //Левая интерполяция
-        [InlineData(-1, -0.5, 10, 5, 7.5)]
-        [InlineData(-1, -0.1, 10, 5, 5.5)]
-        [InlineData(-1, -0.9, 10, 5, 9.5)]
-        public void InterpolateX_SetNet_TestCases(int i, double dx, double left, double right, double expected)
+        [InlineData(0, 0, 0)]
+        [InlineData(0, 1, -20)]
+        [InlineData(2, 0, 20)]
+        [InlineData(1, 1, -10)]
+        //Положительные значения
+        [InlineData(0.5, 0, 5)]
+        [InlineData(0.7, 0, 7)]
+        [InlineData(1.7, 0, 17)]
+        //Отрицательные значения
+        [InlineData(0.1, 1, -19)]
+        [InlineData(1.1, 1, -9)]
+        [InlineData(1.75, 1, -2.5)]
+        public void InterpolateHorizontal_SetNet_TestCases(double x, int j, double expected)
         {
-            var pointer = Setup<I2Pointer>();
-            pointer.Setup(x => x.GetValue(i, 0)).Returns(left);
-            pointer.Setup(x => x.GetValue(i + 1, 0)).Returns(right);
+            var net = new MathNet2(2, 1, 1, 1);
+            net.Set(0, 0, 0);
+            net.Set(1, 0, 10);
+            net.Set(2, 0, 20);
 
-            var result = _service.InterpolateX(pointer.Object, dx);
+            net.Set(0, 1, -20);
+            net.Set(1, 1, -10);
+            net.Set(2, 1, 0);
+            
+            var result = _service.InterpolateHorizontal(net, x, j);
 
             Assert.Equal(expected, result, new EpsilonComparer(5));
         }
@@ -47,25 +52,30 @@ namespace EE.NIESolver.MathNet.Tests.Services
 
         [Theory]
         //Дискретные значения
-        [InlineData(0, 0, 5, 10, 5)]
-        [InlineData(0, 1, 5, 10, 10)]
-        [InlineData(-1, -1, 10, 5, 10)]
-        //Верхняя интерполяция
-        [InlineData(0, 0.5, 5, 10, 7.5)]
-        [InlineData(0, 0.1, 5, 10, 5.5)]
-        [InlineData(0, 0.9, 5, 10, 9.5)]
-        [InlineData(2, 2.1, 5, 10, 5.5)]
-        //Нижняя интерполяция
-        [InlineData(-1, -0.5, 10, 5, 7.5)]
-        [InlineData(-1, -0.1, 10, 5, 5.5)]
-        [InlineData(-1, -0.9, 10, 5, 9.5)]
-        public void InterpolateY_SetNet_TestCases(int i, double dx, double bottom, double top, double expected)
+        [InlineData(0, 0, 0)]
+        [InlineData(0, 1, -20)]
+        [InlineData(2, 0, 20)]
+        [InlineData(1, 1, -10)]
+        //Положительные значения
+        [InlineData(0.5, 0, 5)]
+        [InlineData(0.7, 0, 7)]
+        [InlineData(1.7, 0, 17)]
+        //Отрицательные значения
+        [InlineData(0.1, 1, -19)]
+        [InlineData(1.1, 1, -9)]
+        [InlineData(1.75, 1, -2.5)]
+        public void InterpolateVertical_SetNet_TestCases(double t, int i, double expected)
         {
-            var pointer = Setup<I2Pointer>();
-            pointer.Setup(x => x.GetValue(0, i)).Returns(bottom);
-            pointer.Setup(x => x.GetValue(0, i + 1)).Returns(top);
+            var net = new MathNet2(1, 2, 1, 1);
+            net.Set(0, 0, 0);
+            net.Set(0, 1, 10);
+            net.Set(0, 2, 20);
 
-            var result = _service.InterpolateY(pointer.Object, dx);
+            net.Set(1, 0, -20);
+            net.Set(1, 1, -10);
+            net.Set(1, 2, 0);
+            
+            var result = _service.InterpolateVertical(net, i, t);
 
             Assert.Equal(expected, result, new EpsilonComparer(5));
         }
