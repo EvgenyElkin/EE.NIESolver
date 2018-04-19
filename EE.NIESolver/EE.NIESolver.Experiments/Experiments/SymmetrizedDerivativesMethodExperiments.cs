@@ -35,7 +35,7 @@ namespace EE.NIESolver.Experiments.Experiments
                 .SetInitialConditions(x => 0)
                 .SetLeftBorder(x => 0)
                 .SetHistory(1, (x, t) => t * Math.Sin(Math.PI * x))
-                .Build((double) 1 / n, (double) 1 / n);
+                .Build(2d / n, 1d / n);
 
             var solver = new MathSolver(OneSpatialVariable_ConstantDelay_ExperimentFunction);
             var history = new SymmetrizedDerivativesNetHistory(net, new LinearInterpolationService());

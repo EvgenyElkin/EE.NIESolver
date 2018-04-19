@@ -44,11 +44,16 @@ namespace EE.NIESolver.MathNet.Services
 
         public double Get(double x, double t)
         {
-            var n = (int) Math.Ceiling(t / _net.D);
-            var m = (int) Math.Ceiling(n / _net.D);
-            var left = _interpolationService.InterpolateVertical(_net, n, t - 1);
-            var right = _interpolationService.InterpolateVertical(_net, n + 1, t - 1);
-            var down = left + right / 2;
+            var n = (int) Math.Ceiling(x / _net.H);
+            var m = (int) Math.Ceiling(t / _net.D);
+            if (t < 0)
+            {
+                return (_interpolationService.InterpolateVertical(_net, n, t)
+                        + _interpolationService.InterpolateVertical(_net, n - 1, t)) / 2;
+            }
+            var left = _interpolationService.InterpolateVertical(_net, n, t - _net.D);
+            var right = _interpolationService.InterpolateVertical(_net, n + 1, t - _net.D);
+            var down = (left + right) / 2;
             var top = _interpolationService.InterpolateHorizontal(_net, x, m);
             return 2 * down - top;
         }
