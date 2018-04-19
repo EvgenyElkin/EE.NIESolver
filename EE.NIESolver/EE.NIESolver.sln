@@ -11,7 +11,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EE.NIESolver.MathNet.Tests"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EE.NIESolver.Solver", "EE.NIESolver.Solver\EE.NIESolver.Solver.csproj", "{CB29C6F6-5364-49C5-80D0-38CA4C51B03F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EE.NIESolver.Experiments", "EE.NIESolver.Experiments\EE.NIESolver.Experiments.csproj", "{3E1B6DB3-2980-4625-8549-173B72D742D7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EE.NIESolver.Experiments", "EE.NIESolver.Experiments\EE.NIESolver.Experiments.csproj", "{3E1B6DB3-2980-4625-8549-173B72D742D7}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Web", "Web", "{D85F3E44-7792-4491-82A0-B11C87C1C4BE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EE.NIESolver.DataLayer", "EE.NIESolver.DataLayer\EE.NIESolver.DataLayer.csproj", "{15EEB031-F7D8-4AB2-AA70-4E3F7185CCA7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EE.NIESolver.Web", "EE.NIESolver.Web\EE.NIESolver.Web.csproj", "{FFF30608-391E-4697-B3EA-643BB69EFD01}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -35,6 +41,14 @@ Global
 		{3E1B6DB3-2980-4625-8549-173B72D742D7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3E1B6DB3-2980-4625-8549-173B72D742D7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3E1B6DB3-2980-4625-8549-173B72D742D7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{15EEB031-F7D8-4AB2-AA70-4E3F7185CCA7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{15EEB031-F7D8-4AB2-AA70-4E3F7185CCA7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{15EEB031-F7D8-4AB2-AA70-4E3F7185CCA7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{15EEB031-F7D8-4AB2-AA70-4E3F7185CCA7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FFF30608-391E-4697-B3EA-643BB69EFD01}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FFF30608-391E-4697-B3EA-643BB69EFD01}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FFF30608-391E-4697-B3EA-643BB69EFD01}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FFF30608-391E-4697-B3EA-643BB69EFD01}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -42,6 +56,8 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{0A535F69-1131-42CB-BE33-EDC584EA9154} = {CE4923E2-AF48-4EA7-8743-01C6CFCDB782}
 		{3E1B6DB3-2980-4625-8549-173B72D742D7} = {CE4923E2-AF48-4EA7-8743-01C6CFCDB782}
+		{15EEB031-F7D8-4AB2-AA70-4E3F7185CCA7} = {D85F3E44-7792-4491-82A0-B11C87C1C4BE}
+		{FFF30608-391E-4697-B3EA-643BB69EFD01} = {D85F3E44-7792-4491-82A0-B11C87C1C4BE}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {346372A6-8892-4A9B-9D7E-0F1662C5BD08}
