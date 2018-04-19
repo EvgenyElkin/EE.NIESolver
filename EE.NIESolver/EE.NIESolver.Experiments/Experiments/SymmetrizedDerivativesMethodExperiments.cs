@@ -17,13 +17,14 @@ namespace EE.NIESolver.Experiments.Experiments
         #region Одна переменная по пространству, с постоянным запаздыванием
 
         [Theory]
-        [InlineData(40, 20, 0.06128)]
-        [InlineData(40, 40, 0.03349)]
-        [InlineData(40, 80, 0.0195)]
-        [InlineData(80, 80, 0.01576)]
-        [InlineData(160, 80, 0.01474)]
-        [InlineData(320, 160, 0.00732)]
-        public void OneSpatialVariable_ConstantDelay(int n, int m, double expected)
+        [InlineData(40, 20, 2)]
+        [InlineData(40, 40, 2)]
+        [InlineData(40, 80, 2)]
+        [InlineData(80, 80, 2)]
+        [InlineData(160, 80, 3)]
+        [InlineData(320, 160, 4)]
+        [InlineData(1280, 640, 5)]
+        public void OneSpatialVariable_ConstantDelay(int n, int m, int power)
         {
             Log("Одна переменная по пространству, с постоянным запаздыванием");
             Log("x: (0, 2), t: (-1, 1)");
@@ -42,11 +43,11 @@ namespace EE.NIESolver.Experiments.Experiments
 
             solver.Solve(net, history);
 
-            AssertSolve(net, (x, t) => t * Math.Sin(Math.PI * x), expected);
+            AssertSolve(net, (x, t) => t * Math.Sin(Math.PI * x), power);
         }
 
         private static double OneSpatialVariable_ConstantDelay_ExperimentFunction(double x, double t, INetHistory u) => 
-            Math.Sin(Math.PI * x) + Math.PI * t * Math.Cos(x) - (t - 1) * Math.Sin(Math.PI * x) + u.Get(x, t - 1);
+            Math.Sin(Math.PI * x) + Math.PI * t * Math.Cos(Math.PI * x) - (t - 1) * Math.Sin(Math.PI * x) + u.Get(x, t - 1);
 
         #endregion
     }

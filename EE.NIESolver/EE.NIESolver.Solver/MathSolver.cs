@@ -24,7 +24,7 @@ namespace EE.NIESolver.Solver
                 {
                     p.Set(i, j);
 
-                    var value = (_func(p.X - net.H/2, p.T - net.D / 2, history) * 2 * net.H * net.D - (net.H - net.D) * (p.GetDown() - p.GetLeft())) /
+                    var value = (_func(p.X - net.H/2, p.T - net.D / 2, history) * 2 * net.H * net.D + (net.H - net.D) * (p.GetDown() - p.GetLeft())) /
                                 (net.H + net.D) + p.GetValue(-1, -1);
                     net.Set(i, j, value);
                 }

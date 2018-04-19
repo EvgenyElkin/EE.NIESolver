@@ -1,4 +1,4 @@
-﻿namespace EE.NIESolver.MathNet.Services
+﻿namespace EE.NIESolver.MathNet.Interfaces
 {
     public interface IInterpolationService
     {

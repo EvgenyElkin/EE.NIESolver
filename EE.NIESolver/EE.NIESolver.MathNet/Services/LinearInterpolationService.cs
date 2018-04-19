@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using EE.NIESolver.MathNet.Interfaces;
 
 namespace EE.NIESolver.MathNet.Services
 {

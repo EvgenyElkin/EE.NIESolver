@@ -49,7 +49,7 @@ namespace EE.NIESolver.Experiments
 
         #region Проверка значений
 
-        protected void AssertSolve(MathNet2 net, Func<double, double, double> expectedFunc, double expectedError, int power = 5)
+        protected void AssertSolve(MathNet2 net, Func<double, double, double> expectedFunc, int power = 5)
         {
             var result = double.MinValue;
             for (var j = 0; j <= net.Height; j++)
@@ -62,8 +62,9 @@ namespace EE.NIESolver.Experiments
                     result = error;
                 }
             }
-            Assert.True(Math.Abs(result - expectedError) < 0.5 * Math.Pow(10, -power), 
-                $"Ошибка {result}, не соотвествует {expectedError}( c точностью {power})");
+            Log($"Ошибка:{result:f10}");
+            Assert.True(Math.Abs(result) < 0.5 * Math.Pow(10, -power), 
+                $"Ошибка {result:f10}, не соотвествует порядку {power})");
         }
 
         protected void Log(string message)
