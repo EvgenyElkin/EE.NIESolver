@@ -30,6 +30,8 @@ namespace EE.NIESolver.MathNet.Services
     public interface INetHistory
     {
         double Get(double x, double t);
+
+        double Integral(double x, double from, double to);
     }
 
     public class SymmetrizedDerivativesNetHistory : INetHistory
@@ -66,6 +68,20 @@ namespace EE.NIESolver.MathNet.Services
             var down = (left + right) / 2;
             return down + (top - down)/ coef * _net.D;
         }
+
+        public double Integral(double x, double from, double to)
+        {
+            var result = 0d;
+            var n = (int)Math.Ceiling(x / _net.H);
+            var m = (int)Math.Floor(from / _net.D);
+            while (m * _net.D < to)
+            {
+                result += ((_net.Get(n, m) + _net.Get(n, m + 1)) / 2) * _net.D;
+                m++;
+            }
+
+            return result;
+        }
     }
 
     public class CachedNetHistoryDecorator : INetHistory
@@ -93,6 +109,11 @@ namespace EE.NIESolver.MathNet.Services
             }
 
             return _cache[key];
+        }
+
+        public double Integral(double x, double from, double to)
+        {
+            return _decoratee.Integral(x, from, to);
         }
     }
 
