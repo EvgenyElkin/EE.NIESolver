@@ -66,13 +66,13 @@ namespace EE.NIESolver.MathNet.Tests.Services
             _net.Set(1, 2, 5);
             _net.Set(2, 2, 10);
 
-            _interpolation.Setup(x => x.InterpolateVertical(_net, 1, 1.5)).Returns(1.5);
-            _interpolation.Setup(x => x.InterpolateVertical(_net, 2, 1.5)).Returns(7.5);
+            _interpolation.Setup(x => x.InterpolateVertical(_net, 1, 1.5)).Returns(3);
+            _interpolation.Setup(x => x.InterpolateVertical(_net, 2, 1.5)).Returns(6);
             _interpolation.Setup(x => x.InterpolateHorizontal(_net, 1.5, 2)).Returns(7.5);
 
             var result = _history.Get(1.5, 2.5);
 
-            Assert.Equal(7.5, result, new EpsilonComparer(5));
+            Assert.Equal(10.5, result, new EpsilonComparer(5));
         }
     }
 }
