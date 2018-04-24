@@ -74,5 +74,29 @@ namespace EE.NIESolver.MathNet.Tests.Services
 
             Assert.Equal(10.5, result, new EpsilonComparer(5));
         }
+
+        [Theory]
+        [InlineData(0.5, 1.5, 2)]
+        [InlineData(0.5, 1.25, 1.75)]
+        [InlineData(0.5, 1.75, 2.25)]
+        [InlineData(0.5, 1.001, 1.5)]
+        [InlineData(0.5, 1.999, 2.5)]
+        public void Get_SetInterpolationService_IntegrationTest(double xValue, double yValue, double expected)
+        {
+            _net.Set(0, 0, 0);
+            _net.Set(1, 0, 1);
+            _net.Set(0, 1, 1);
+            _net.Set(1, 1, 2);
+
+            var interpolation = new LinearInterpolationService();
+            _interpolation.Setup(s => s.InterpolateVertical(_net, It.IsAny<int>(), It.IsAny<double>()))
+                .Returns((MathNet2 net, int i, double y) => interpolation.InterpolateVertical(net, i, y));
+            _interpolation.Setup(s => s.InterpolateHorizontal(_net,  It.IsAny<double>(), It.IsAny<int>()))
+                .Returns((MathNet2 net, double x, int j) => interpolation.InterpolateHorizontal(net, x, j));
+
+            var result = _history.Get(xValue, yValue);
+
+            Assert.Equal(expected, result, new EpsilonComparer(1));
+        }
     }
 }

@@ -18,4 +18,10 @@
     <ProjectReference Include="..\EE.NIESolver.Solver\EE.NIESolver.Solver.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="xunit.runner.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

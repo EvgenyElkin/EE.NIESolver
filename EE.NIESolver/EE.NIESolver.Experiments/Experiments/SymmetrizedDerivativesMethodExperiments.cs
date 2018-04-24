@@ -54,17 +54,16 @@ namespace EE.NIESolver.Experiments.Experiments
         #region Одна переменная по пространству, с переменным запаздыванием
 
         [Theory]
-        [InlineData(20, 10, 10)]
-        //[InlineData(40, 20, 10)]
-        //[InlineData(40, 40, 10)]
-        //[InlineData(40, 80, 10)]
-        //[InlineData(80, 80, 10)]
-        //[InlineData(160, 80, 10)]
-        //[InlineData(320, 160, 10)]
-        //[InlineData(1280, 640, 10)]
+        [InlineData(40, 20, 1)]
+        [InlineData(40, 40, 1)]
+        [InlineData(40, 80, 1)]
+        [InlineData(80, 80, 1)]
+        [InlineData(160, 80, 1)]
+        [InlineData(320, 160, 2)]
+        [InlineData(1280, 640, 2)]
         public void OneSpatialVariable_VariableDelay(int n, int m, int power)
         {
-            Log("Одна переменная по пространству, с постоянным запаздыванием");
+            Log("Одна переменная по пространству, с переменным запаздыванием");
             Log("x: (0, 2), t: (-1, 1)");
             Log($"N = {n}; M = {m}");
 
@@ -81,7 +80,7 @@ namespace EE.NIESolver.Experiments.Experiments
 
             solver.Solve(net, history);
 
-            AssertSolve(net, (x, t) => Math.Exp(x - t));
+            AssertSolve(net, (x, t) => Math.Exp(x - t), power);
         }
 
         private static double OneSpatialVariable_VariableDelay_ExperimentFunction(double x, double t, INetHistory u) =>
