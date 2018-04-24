@@ -36,6 +36,7 @@ namespace EE.NIESolver.MathNet.Services
     {
         private readonly IInterpolationService _interpolationService;
         private readonly MathNet2 _net;
+        private int _level;
 
         public SymmetrizedDerivativesNetHistory(MathNet2 net, IInterpolationService interpolation)
         {
@@ -47,16 +48,23 @@ namespace EE.NIESolver.MathNet.Services
         {
             var n = (int) Math.Ceiling(x / _net.H);
             var m = (int) Math.Ceiling(t / _net.D);
-            if (t < 0)
+            if (m > _level)
+            {
+                _level = m;
+            }
+
+            if (t < 0 || m < _level)
             {
                 return (_interpolationService.InterpolateVertical(_net, n, t)
                         + _interpolationService.InterpolateVertical(_net, n - 1, t)) / 2;
             }
-            var left = _interpolationService.InterpolateVertical(_net, n, t - _net.D);
-            var right = _interpolationService.InterpolateVertical(_net, n + 1, t - _net.D);
+
+            var coef = ((m - 1) * _net.D - (t - 1));
+            var left = _interpolationService.InterpolateVertical(_net, n - 1, t - _net.D);
+            var right = _interpolationService.InterpolateVertical(_net, n, t - _net.D);
+            var top = _interpolationService.InterpolateHorizontal(_net, x, m - 1);
             var down = (left + right) / 2;
-            var top = _interpolationService.InterpolateHorizontal(_net, x, m);
-            return 2 * down - top;
+            return down + (top - down)/ coef * _net.D;
         }
     }
 
