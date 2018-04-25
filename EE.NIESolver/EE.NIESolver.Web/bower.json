@@ -1,0 +1,13 @@
+{
+  "name": "asp.net",
+  "private": true,
+  "dependencies": {
+    "underscore": "*",
+    "angular": "1.6.9",
+    "semantic-ui": "2.0.7",
+    "angular-route": "1.6.9",
+    "semantic-ui-angular-jquery": "0.2.4",
+    "angular-md5": "0.1.10",
+    "ngstorage": "0.3.11"
+  }
+}
