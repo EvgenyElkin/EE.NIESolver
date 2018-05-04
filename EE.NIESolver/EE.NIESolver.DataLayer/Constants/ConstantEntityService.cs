@@ -7,36 +7,20 @@ using EE.NIESolver.DataLayer.Repositories;
 
 namespace EE.NIESolver.DataLayer.Constants
 {
-    public interface IConstantService
-    {
-        int GetId<TEnum>(TEnum value) where TEnum : struct;
-        TEnum GetEnum<TEnum>(int id) where TEnum : struct;
-    }
-
     public class ConstantService : IConstantService
     {
-        private class EnumItem
-        {
-            public int Id { get; set; }
-            public string Name { get; set; }
-            public string Description { get; set; }
-        }
-
-        private static IDictionary<int, EnumItem> _cache;
-        private static IDictionary<string, EnumItem> _index;
+        private readonly IDictionary<int, ConstantItem> _cache;
+        private readonly IDictionary<string, ConstantItem> _index;
 
         public ConstantService(IDataRepository repository)
         {
-            if (_cache == null)
-            {
-                Initialize(repository);
+            Initialize(repository);
 
-                EnumItem Converter(ConstantEntity x) => new EnumItem {Id = x.Id, Name = x.Name, Description = x.Description};
-                var enums = repository.Select<ConstantEntity>().ToArray();
+            ConstantItem Converter(ConstantEntity x) => new ConstantItem {Id = x.Id, Value = x.Name, Description = x.Description ?? x.Name};
+            var enums = repository.Select<ConstantEntity>().ToArray();
 
-                _cache = enums.ToDictionary(x => x.Id, Converter);
-                _index = enums.ToDictionary(x => x.Name, Converter);
-            }
+            _cache = enums.ToDictionary(x => x.Id, Converter);
+            _index = enums.ToDictionary(x => x.Name, Converter);
         }
 
         public int GetId<TEnum>(TEnum value) where TEnum : struct
@@ -44,9 +28,29 @@ namespace EE.NIESolver.DataLayer.Constants
             return _index[typeof(TEnum).Name + "." + value].Id;
         }
 
+        public string GetDescription<TEnum>(TEnum value) where TEnum : struct
+        {
+            return _index[typeof(TEnum).Name + "." + value].Description;
+        }
+        
         public TEnum GetEnum<TEnum>(int id) where TEnum : struct
         {
-            return Enum.Parse<TEnum>(_cache[id].Name.Split('.').Last());
+            return Enum.Parse<TEnum>(_cache[id].Value.Split('.').Last());
+        }
+
+        public Dictionary<int, string> GetDescriptions<TEnum>() where TEnum : struct
+        {
+            return Enum.GetValues(typeof(TEnum))
+                .OfType<TEnum>()
+                .ToDictionary(GetId, GetDescription);
+        }
+
+        public IEnumerable<ConstantItem> GetValues<TEnum>() where TEnum : struct
+        {
+            return Enum.GetValues(typeof(TEnum))
+                .OfType<TEnum>()
+                .Select(x => _cache[GetId(x)])
+                .ToArray();
         }
 
         private void Initialize(IDataRepository repository)

@@ -1,5 +1,6 @@
 ﻿using EE.NIESolver.DataLayer.Entities.Account;
 using EE.NIESolver.DataLayer.Entities.Common;
+using EE.NIESolver.DataLayer.Entities.Solver;
 using Microsoft.EntityFrameworkCore;
 
 namespace EE.NIESolver.DataLayer
@@ -19,6 +20,13 @@ namespace EE.NIESolver.DataLayer
 
         public DbSet<UserEntity> Users { get; set; }
         public DbSet<RoleEntity> Roles { get; set; }
+
+        #endregion
+
+        #region Solver - объекты для вычислений
+
+        private DbSet<MethodEntity> Methods { get; set; }
+        private DbSet<MethodParameterEntity> MethodParameters { get; set; }
 
         #endregion
 

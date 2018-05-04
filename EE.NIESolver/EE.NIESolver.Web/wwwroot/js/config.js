@@ -7,7 +7,12 @@
             {
                 name: "Главная",
                 url: "/home/index",
-                icon: "home"
+                icon: "home",
+            },
+            {
+                name: "Методы",
+                url: "/method/index",
+                icon: "external alternate",
             }
         ]
     });

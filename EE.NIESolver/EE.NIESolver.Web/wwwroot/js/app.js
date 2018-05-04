@@ -15,6 +15,18 @@
                   templateUrl: "js/pages/home/home-template.html",
                   controller: "HomeController",
                   controllerAs: "homeCtrl"
+          })
+          .when("/method/index",
+              {
+                  templateUrl: "js/pages/method/method-index-template.html",
+                  controller: "MethodIndexController",
+                  controllerAs: "methodIndexCtrl"
+          })
+          .when("/method/edit/:methodId",
+              {
+                  templateUrl: "js/pages/method/method-edit-template.html",
+                  controller: "MethodEditController",
+                  controllerAs: "methodEditCtrl"
               })
           .otherwise({
               redirectTo: "/home/index"

@@ -2,10 +2,21 @@
 using System.Linq;
 using System.Linq.Expressions;
 using EE.NIESolver.DataLayer.Entities.Interfaces;
-using EE.NIESolver.DataLayer.Repositories;
+using Microsoft.EntityFrameworkCore;
 
 namespace EE.NIESolver.DataLayer.Repositories
 {
+    [AttributeUsage(AttributeTargets.Property)]
+    public class IncludeCollectionAttribute : Attribute
+    {
+        public string PropertyName { get; set; }
+
+        public IncludeCollectionAttribute(string propertyName = null)
+        {
+            
+        }
+    }
+
     public class DataRepository : IDataRepository
     {
         private readonly SolverContext _context;
@@ -14,16 +25,31 @@ namespace EE.NIESolver.DataLayer.Repositories
         {
             _context = context;
         }
-
+        
         public IQueryable<TEntity> Select<TEntity>() where TEntity : class, IEntity
         {
-            return _context.Set<TEntity>();
+            IQueryable<TEntity> result =  _context.Set<TEntity>();
+            var properties = typeof(TEntity).GetProperties()
+                .Where(x => x.CustomAttributes.Any(a => a.AttributeType == typeof(IncludeCollectionAttribute)));
+            foreach (var property in properties)
+            {
+                var attribute = property
+                    .GetCustomAttributes(typeof(IncludeCollectionAttribute), false)
+                    .OfType<IncludeCollectionAttribute>()
+                    .First();
+                var propertyName = !string.IsNullOrEmpty(attribute.PropertyName)
+                    ? attribute.PropertyName
+                    : property.Name;
+                result = result.Include(propertyName);
+            }
+            return result;
         }
+        
 
         public IQueryable<TEntity> Select<TEntity>(Expression<Func<TEntity, bool>> selector)
             where TEntity : class, IEntity
         {
-            return _context.Set<TEntity>().Where(selector);
+            return Select<TEntity>().Where(selector);
         }
 
         public TEntity Get<TEntity>(int id) where TEntity : class, IDomainEntity

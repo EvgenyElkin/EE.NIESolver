@@ -11,8 +11,8 @@ using System;
 namespace EE.NIESolver.Web.Migrations
 {
     [DbContext(typeof(SolverContext))]
-    [Migration("20180419180945_SolverInit")]
-    partial class SolverInit
+    [Migration("20180426120033_SOLVER6")]
+    partial class SOLVER6
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -65,6 +65,46 @@ namespace EE.NIESolver.Web.Migrations
                     b.ToTable("Constant","commmon");
                 });
 
+            modelBuilder.Entity("EE.NIESolver.DataLayer.Entities.Solver.MethodEntity", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Description");
+
+                    b.Property<string>("Name")
+                        .IsRequired();
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Method","solver");
+                });
+
+            modelBuilder.Entity("EE.NIESolver.DataLayer.Entities.Solver.MethodParameterEntity", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Code");
+
+                    b.Property<string>("Description");
+
+                    b.Property<int>("MethodId");
+
+                    b.Property<string>("Name")
+                        .IsRequired();
+
+                    b.Property<int>("ParameterTypeId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MethodId");
+
+                    b.HasIndex("ParameterTypeId");
+
+                    b.ToTable("MathodParameter","solver");
+                });
+
             modelBuilder.Entity("EE.NIESolver.DataLayer.Entities.Account.RoleEntity", b =>
                 {
                     b.HasOne("EE.NIESolver.DataLayer.Entities.Common.ConstantEntity", "Role")
@@ -75,6 +115,19 @@ namespace EE.NIESolver.Web.Migrations
                     b.HasOne("EE.NIESolver.DataLayer.Entities.Account.UserEntity", "User")
                         .WithMany("Roles")
                         .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("EE.NIESolver.DataLayer.Entities.Solver.MethodParameterEntity", b =>
+                {
+                    b.HasOne("EE.NIESolver.DataLayer.Entities.Solver.MethodEntity", "Method")
+                        .WithMany("Parameteres")
+                        .HasForeignKey("MethodId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("EE.NIESolver.DataLayer.Entities.Common.ConstantEntity", "ParameterType")
+                        .WithMany()
+                        .HasForeignKey("ParameterTypeId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618

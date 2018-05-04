@@ -1,5 +1,7 @@
-﻿using System.Reflection;
+﻿using System;
+using System.Reflection;
 using EE.NIESolver.DataLayer;
+using EE.NIESolver.DataLayer.Constants;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -16,7 +18,7 @@ namespace EE.NIESolver.Web
             Configuration = configuration;
         }
 
-        public void ConfigureServices(IServiceCollection services)
+        public IServiceProvider ConfigureServices(IServiceCollection services)
         {
             var conntectionString = Configuration.GetConnectionString("Server");
             var migrationAssembly = Assembly.GetExecutingAssembly().FullName;
@@ -25,8 +27,18 @@ namespace EE.NIESolver.Web
                 {
                     options.UseNpgsql(conntectionString, opt => opt.MigrationsAssembly(migrationAssembly));
                 })
+                .AddScoped<IConstantService, ConstantService>()
                 .WithDataLayer()
                 .AddMvc();
+
+            var serviceProvider = services.BuildServiceProvider();
+            InitializeStaticContexts(serviceProvider);
+            return serviceProvider;
+        }
+
+        public void InitializeStaticContexts(IServiceProvider provider)
+        {
+            ConstantConext.SetFactory(provider.GetService<IConstantService>);
         }
         
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
