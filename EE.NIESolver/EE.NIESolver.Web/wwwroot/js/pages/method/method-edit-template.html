@@ -13,54 +13,64 @@
             <label>Название</label>
             <input ng-model="methodEditCtrl.model.name" type="text" name="name" placeholder="Название" required>
         </div>
+
+        <div class="field">
+            <label>Тип метода</label>
+            <sm-dropdown model="methodEditCtrl.model.methodTypeId" items="methodEditCtrl.model.methodTypes" label="item.description" value="item.id" default-text="'Тип метода'" class="ui selection dropdown"></sm-dropdown>
+        </div>
+
         <div class="field">
             <label>Описание</label>
             <textarea ng-model="methodEditCtrl.model.description" name="description" placeholder="Описание" required=""></textarea>
         </div>
 
         <h4 class="ui dividing header">Параметры</h4>
-            
-        <div ng-if="!methodEditCtrl.model.parameteres.length" 
+
+        <div ng-if="!methodEditCtrl.model.parameteres.length"
              class="ui right floated small orange labeled icon button"
              ng-click="methodEditCtrl.addParameter()">
             <i class="add icon"></i>Добавить параметр
         </div>
         <table class="ui compact table" ng-if="methodEditCtrl.model.parameteres.length">
             <thead>
-            <tr>
-                <th>Название</th>
-                <th>Описание</th>
-                <th>Тип</th>
-                <th></th>
-            </tr>
+                <tr>
+                    <th>Название</th>
+                    <th>Описание</th>
+                    <th>Код</th>
+                    <th>Тип</th>
+                    <th></th>
+                </tr>
             </thead>
             <tbody>
-            <tr ng-repeat="(index, param) in methodEditCtrl.model.parameteres">
-                <td>
-                    <input ng-model="param.name" type="text" name="name" placeholder="Название" required>
-                </td>
-                <td>
-                    <input ng-model="param.description" type="text" name="description" placeholder="Описание" required>
-                </td>
-                <td class="collapsing">
-                    <sm-dropdown model="param.typeId" items="methodEditCtrl.model.methodParameterTypes"  label="item.description" value="item.id" default-text="'Тип'" class="ui selection dropdown"></sm-dropdown>
-                </td>
-                <td class="right aligned collapsing">
-                    <a href="javascript: " ng-click="methodEditCtrl.removeParameter(index)">
-                        <i class="ui icon orange remove"></i>
-                    </a>
-                </td>
-            </tr>
+                <tr ng-repeat="(index, param) in methodEditCtrl.model.parameteres">
+                    <td>
+                        <input ng-model="param.name" type="text" name="name" placeholder="Название" required>
+                    </td>
+                    <td>
+                        <input ng-model="param.description" type="text" name="description" placeholder="Описание" required>
+                    </td>
+                    <td>
+                        <input ng-model="param.code" type="text" name="code" placeholder="Код" required>
+                    </td>
+                    <td class="collapsing">
+                        <sm-dropdown model="param.typeId" items="methodEditCtrl.model.methodParameterTypes" label="item.description" value="item.id" default-text="'Тип'" class="ui selection dropdown"></sm-dropdown>
+                    </td>
+                    <td class="right aligned collapsing">
+                        <a href="javascript: " ng-click="methodEditCtrl.removeParameter(index)">
+                            <i class="ui icon orange remove"></i>
+                        </a>
+                    </td>
+                </tr>
             </tbody>
             <tfoot class="full-width">
-            <tr>
-                <th colspan="4">
-                    <div ng-click="methodEditCtrl.addParameter()"
-                         class="ui right floated small orange labeled icon button">
-                        <i class="add icon"></i>Добавить параметр
-                    </div>
-                </th>
-            </tr>
+                <tr>
+                    <th colspan="4">
+                        <div ng-click="methodEditCtrl.addParameter()"
+                             class="ui right floated small orange labeled icon button">
+                            <i class="add icon"></i>Добавить параметр
+                        </div>
+                    </th>
+                </tr>
             </tfoot>
         </table>
 

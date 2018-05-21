@@ -13,6 +13,11 @@
                 name: "Методы",
                 url: "/method/index",
                 icon: "external alternate",
+            },
+            {
+                name: "Эксперименты",
+                url: "/experiment/index",
+                icon: "sience alternate"
             }
         ]
     });

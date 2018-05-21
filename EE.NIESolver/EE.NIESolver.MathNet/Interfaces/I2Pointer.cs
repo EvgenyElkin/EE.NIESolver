@@ -3,6 +3,7 @@ namespace EE.NIESolver.MathNet
 {
     public interface I2Pointer
     {
+        MathNet2 Net { get; }
         double GetValue(int di, int dj);
         double GetLeft(uint value = 1);
         double GetRight(uint value = 1);
@@ -10,10 +11,5 @@ namespace EE.NIESolver.MathNet
         double GetDown(uint value = 1);
         double X { get; }
         double T { get; }
-    }
-
-    public interface IHistoryProvider
-    {
-        double ExtractValue(double x, double y);
     }
 }

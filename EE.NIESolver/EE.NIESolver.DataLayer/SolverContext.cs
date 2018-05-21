@@ -12,27 +12,29 @@ namespace EE.NIESolver.DataLayer
 
         #region Common - инфраструктурные объекты
 
-        public DbSet<ConstantEntity> Constants { get; set; }
+        public DbSet<DbConstant> Constants { get; set; }
 
         #endregion
 
         #region Account - объекты пользователей
 
-        public DbSet<UserEntity> Users { get; set; }
-        public DbSet<RoleEntity> Roles { get; set; }
+        public DbSet<DbUser> Users { get; set; }
+        public DbSet<DbRole> Roles { get; set; }
 
         #endregion
 
         #region Solver - объекты для вычислений
 
-        private DbSet<MethodEntity> Methods { get; set; }
-        private DbSet<MethodParameterEntity> MethodParameters { get; set; }
+        private DbSet<DbMethod> Methods { get; set; }
+        private DbSet<DbMethodParameter> MethodParameters { get; set; }
+        private DbSet<DbExperiment> Experiments { get; set; }
+        private DbSet<DbRunnerType> RunnerTypes { get; set; }
 
         #endregion
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<RoleEntity>()
+            modelBuilder.Entity<DbRole>()
                 .HasKey(x => new {x.UserId, x.RoleId});
             base.OnModelCreating(modelBuilder);
         }

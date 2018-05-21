@@ -21,12 +21,6 @@
             self.model.parameteres.push({typeId: undefined});
         }
 
-        self.values = [
-            { value: "1", label: "Переменная" },
-            { value: "2", label: "Константа" },
-            { value: "3", label: "Функция" }
-        ];
-
         self.removeParameter = function(index) {
             self.model.parameteres.splice(index, 1);
         }
@@ -36,12 +30,14 @@
                 Id: self.model.id,
                 Name: self.model.name,
                 Description: self.model.description,
+                MethodTypeId: self.model.methodTypeId,
                 Parameteres: _.map(self.model.parameteres,
                     function(x) {
                         return {
                             Id: x.id,
                             Name: x.name,
                             Description: x.description,
+                            Code: x.code,
                             TypeId: x.typeId
                         }
                     })

@@ -3,18 +3,23 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using EE.NIESolver.DataLayer.Entities.Interfaces;
 using EE.NIESolver.DataLayer.Repositories;
+using EE.NIESolver.DataLayer.Entities.Common;
 
 namespace EE.NIESolver.DataLayer.Entities.Solver
 {
     [Table("Method", Schema = "solver")]
-    public class MethodEntity : IDomainEntity
+    public class DbMethod : IDomainEntity
     {
         [Key]
         public int Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
 
+        public int MethodTypeId { get; set; }
+        [ForeignKey(nameof(MethodTypeId))]
+        public virtual DbConstant MethodType { get; set; }
+
         [IncludeCollection]
-        public virtual ICollection<MethodParameterEntity> Parameteres { get; set; }
+        public virtual ICollection<DbMethodParameter> Parameteres { get; set; }
     }
 }

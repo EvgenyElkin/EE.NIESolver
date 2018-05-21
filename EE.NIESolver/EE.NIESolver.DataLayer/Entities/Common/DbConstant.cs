@@ -5,7 +5,7 @@ using EE.NIESolver.DataLayer.Entities.Interfaces;
 namespace EE.NIESolver.DataLayer.Entities.Common
 {
     [Table("Constant", Schema = "commmon")]
-    public class ConstantEntity : IDomainEntity
+    public class DbConstant : IDomainEntity
     {
         [Key]
         [Required]

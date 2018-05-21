@@ -27,6 +27,18 @@
                   templateUrl: "js/pages/method/method-edit-template.html",
                   controller: "MethodEditController",
                   controllerAs: "methodEditCtrl"
+          })
+          .when("/experiment/index",
+              {
+                  templateUrl: "js/pages/experiment/experiment-index-template.html",
+                  controller: "ExperimentIndexController",
+                  controllerAs: "experimentIndexCtrl"
+          })
+          .when("/experiment/create",
+              {
+                  templateUrl: "js/pages/experiment/experiment-create-template.html",
+                  controller: "ExperimentCreateController",
+                  controllerAs: "experimentCreateCtrl"
               })
           .otherwise({
               redirectTo: "/home/index"

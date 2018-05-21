@@ -3,16 +3,6 @@
     public enum MethodParameterTypes
     {
         /// <summary>
-        /// Пространственная переменная
-        /// </summary>
-        SpaceVariable,
-
-        /// <summary>
-        /// Временная переменная
-        /// </summary>
-        TimeVariable,
-
-        /// <summary>
         /// Константа
         /// </summary>
         Constant,

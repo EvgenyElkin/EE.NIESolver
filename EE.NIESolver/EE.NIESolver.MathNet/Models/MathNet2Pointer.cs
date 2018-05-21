@@ -3,13 +3,13 @@ namespace EE.NIESolver.MathNet
 {
     public class MathNet2Pointer : I2Pointer
     {
-        private readonly MathNet2 _net;
+        public MathNet2 Net { get; }
         private int _i;
         private int _j;
 
         public MathNet2Pointer(MathNet2 net)
         {
-            _net = net;
+            Net = net;
         }
 
         public void Set(int i, int j)
@@ -20,20 +20,20 @@ namespace EE.NIESolver.MathNet
 
         public void SetValue(double value)
         {
-            _net.Set(_i, _j, value);
+            Net.Set(_i, _j, value);
         }
 
         public double GetValue(int di, int dj)
         {
-            return _net.Get(_i + di, _j + dj);
+            return Net.Get(_i + di, _j + dj);
         }
 
         public double GetLeft(uint value = 1) => GetValue(-(int) value, 0);
         public double GetRight(uint value = 1) => GetValue((int) value, 0);
         public double GetTop(uint value = 1) => GetValue(0, (int) value);
         public double GetDown(uint value = 1) => GetValue(0, -(int) value);
-        public double X => _net.H * _i;
-        public double T => _net.D * _j;
+        public double X => Net.H * _i;
+        public double T => Net.D * _j;
 
         public MathNet2Pointer To(int dx, int dy)
         {

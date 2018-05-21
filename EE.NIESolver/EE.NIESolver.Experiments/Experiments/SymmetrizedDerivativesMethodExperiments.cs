@@ -2,6 +2,8 @@ using EE.NIESolver.MathNet;
 using System;
 using EE.NIESolver.MathNet.Services;
 using EE.NIESolver.Solver;
+using EE.NIESolver.Solver.Methods;
+using EE.NIESolver.Solver.Runners;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -37,17 +39,17 @@ namespace EE.NIESolver.Experiments.Experiments
                 .SetLeftBorder(x => 0)
                 .SetHistory(1, (x, t) => t * Math.Sin(Math.PI * x))
                 .Build(2d / n, 1d / n);
+            
+            var method = new SymmetrizedDerivatedMethod(OneSpatialVariable_ConstantDelay_ExperimentFunction, new LinearInterpolationService());
 
-            var solver = new MathSolver(OneSpatialVariable_ConstantDelay_ExperimentFunction);
-            var history = new SymmetrizedDerivativesNetHistory(net, new LinearInterpolationService());
-
-            solver.Solve(net, history);
+            var solver = new ClassicRunner(method);
+            solver.Run(net);
 
             AssertSolve(net, (x, t) => t * Math.Sin(Math.PI * x), power);
         }
 
-        private static double OneSpatialVariable_ConstantDelay_ExperimentFunction(double x, double t, INetHistory u) => 
-            Math.Sin(Math.PI * x) + Math.PI * t * Math.Cos(Math.PI * x) - (t - 1) * Math.Sin(Math.PI * x) + u.Get(x, t - 1);
+        private static double OneSpatialVariable_ConstantDelay_ExperimentFunction(double x, double t, Func<double, double, double> u) => 
+            Math.Sin(Math.PI * x) + Math.PI * t * Math.Cos(Math.PI * x) - (t - 1) * Math.Sin(Math.PI * x) + u(x, t - 1);
 
         #endregion
 
@@ -75,16 +77,16 @@ namespace EE.NIESolver.Experiments.Experiments
                 .SetHistory(1, (x, t) => Math.Exp(x-t))
                 .Build(2d / n, 1d / n);
 
-            var solver = new MathSolver(OneSpatialVariable_VariableDelay_ExperimentFunction);
-            var history = new SymmetrizedDerivativesNetHistory(net, new LinearInterpolationService());
+            var method = new SymmetrizedDerivatedMethod(OneSpatialVariable_VariableDelay_ExperimentFunction, new LinearInterpolationService());
+            var solver = new ClassicRunner(method);
 
-            solver.Solve(net, history);
+            solver.Run(net);
 
             AssertSolve(net, (x, t) => Math.Exp(x - t), power);
         }
 
-        private static double OneSpatialVariable_VariableDelay_ExperimentFunction(double x, double t, INetHistory u) =>
-            u.Get(x,t) / u.Get(x, t/2) - Math.Exp(-t/2);
+        private static double OneSpatialVariable_VariableDelay_ExperimentFunction(double x, double t, Func<double, double, double> u)
+            => u(x, t) / u(x, t / 2) - Math.Exp(-t / 2);
 
         #endregion
     }

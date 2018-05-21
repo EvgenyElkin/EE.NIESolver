@@ -1,0 +1,43 @@
+﻿<br />
+
+<div class="ui menu">
+    <div class="item header">
+        <h3>Создание эксперимента</h3>
+    </div>
+</div>
+
+<div class="ui segment">
+    <form name="ExperimentEditForm" class="ui form">
+        <h4 class="ui dividing header">Общие сведения</h4>
+        <div class="field">
+            <label>Название</label>
+            <input ng-model="experimentCreateCtrl.model.name" type="text" name="name" placeholder="Название" required>
+        </div>
+        
+        <div class="field">
+            <label>Описание</label>
+            <textarea ng-model="experimentCreateCtrl.model.description" name="description" placeholder="Описание" required=""></textarea>
+        </div>
+
+        <div class="field">
+            <label>Метод</label>
+            <sm-dropdown model="experimentCreateCtrl.model.methodId" items="experimentCreateCtrl.model.methods" label="item.value" value="item.id" default-text="'Метод'" class="ui selection dropdown"></sm-dropdown>
+        </div>
+
+        <h4 class="ui dividing header">Параметры</h4>
+
+        
+        <div class="field" ng-repeat="(param, $index) in experimentCreateCtrl.model.parameters">
+            <label>{{experimentCreateCtrl.model.parameters[$index].name}}</label>
+            <input ng-model="experimentCreateCtrl.model.parameters[$index].value" type="text" name="{{'parameter'+ $index}}" placeholder="{{experimentCreateCtrl.model.parameters[$index].description}}" required>
+        </div>
+
+        <div class="ui buttons">
+            <a class="ui button" href="javascript: ">Отмена</a>
+            <div class="or"></div>
+            <a class="ui orange button" href="javascript: " ng-click="experimentCreateCtrl.submit()">Сохранить</a>
+        </div>
+
+    </form>
+    
+</div>

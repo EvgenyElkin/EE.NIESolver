@@ -5,10 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="wwwroot\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.6" />
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="2.0.1" />
     <DotNetCliToolReference Include="Microsoft.EntityFrameworkCore.Tools.DotNet" Version="2.0.0" />
@@ -16,6 +12,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\EE.NIESolver.DataLayer\EE.NIESolver.DataLayer.csproj" />
+    <ProjectReference Include="..\EE.NIESolver.Solver\EE.NIESolver.Solver.csproj" />
   </ItemGroup>
 
 </Project>
