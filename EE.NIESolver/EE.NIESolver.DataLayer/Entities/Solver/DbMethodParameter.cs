@@ -1,7 +1,9 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using EE.NIESolver.DataLayer.Entities.Common;
 using EE.NIESolver.DataLayer.Entities.Interfaces;
+using EE.NIESolver.DataLayer.Repositories;
 
 namespace EE.NIESolver.DataLayer.Entities.Solver
 {
@@ -23,5 +25,8 @@ namespace EE.NIESolver.DataLayer.Entities.Solver
         public int ParameterTypeId { get; set; }
         [ForeignKey(nameof(ParameterTypeId))]
         public virtual DbConstant ParameterType { get; set; }
+
+        [IncludeProperty]
+        public virtual ICollection<DbMethodParameterValue> Values { get; set; }
     }
 }

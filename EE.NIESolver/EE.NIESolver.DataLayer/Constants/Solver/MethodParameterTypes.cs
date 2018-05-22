@@ -20,6 +20,11 @@
         /// <summary>
         /// Трехмерная функция
         /// </summary>
-        R3Function
+        R3Function,
+
+        /// <summary>
+        /// Двумерная функция с запаздыванием
+        /// </summary>
+        DelayedR2Function
     }
 }

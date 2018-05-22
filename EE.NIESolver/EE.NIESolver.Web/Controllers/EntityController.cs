@@ -32,7 +32,7 @@ namespace EE.NIESolver.Web.Controllers
             return model;
         }
 
-        protected JsonResult JsonResult(bool result, object item)
+        protected JsonResult JsonResult(bool result, object item = null)
         {
             return Json(new
             {

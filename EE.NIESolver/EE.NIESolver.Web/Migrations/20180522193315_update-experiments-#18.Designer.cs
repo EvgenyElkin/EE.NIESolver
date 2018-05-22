@@ -11,9 +11,10 @@ using System;
 namespace EE.NIESolver.Web.Migrations
 {
     [DbContext(typeof(SolverContext))]
-    partial class SolverContextModelSnapshot : ModelSnapshot
+    [Migration("20180522193315_update-experiments-#18")]
+    partial class updateexperiments18
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

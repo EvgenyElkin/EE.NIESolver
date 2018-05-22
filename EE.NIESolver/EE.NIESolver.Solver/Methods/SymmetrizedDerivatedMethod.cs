@@ -7,11 +7,11 @@ namespace EE.NIESolver.Solver.Methods
 {
     public class SymmetrizedDerivatedMethod : I2Method
     {
-        private readonly OneSpaceVariableRightFunction _func;
+        private readonly R2DelayedFunction _func;
         private readonly IInterpolationService _interpolationService;
         private int _level;
 
-        public SymmetrizedDerivatedMethod(OneSpaceVariableRightFunction func, IInterpolationService interpolationService)
+        public SymmetrizedDerivatedMethod(R2DelayedFunction func, IInterpolationService interpolationService)
         {
             _func = func;
             _interpolationService = interpolationService;

@@ -22,5 +22,10 @@ namespace EE.NIESolver.DataLayer.Constants
             var value = _current.Value.GetEnum<TEnum>(id);
             return _current.Value.GetDescription(value);
         }
+
+        public static TEnum GetEnum<TEnum>(this int id) where TEnum : struct
+        {
+            return _current.Value.GetEnum<TEnum>(id);
+        }
     }
 }

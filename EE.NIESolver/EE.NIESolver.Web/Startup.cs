@@ -2,6 +2,11 @@
 using System.Reflection;
 using EE.NIESolver.DataLayer;
 using EE.NIESolver.DataLayer.Constants;
+using EE.NIESolver.MathNet;
+using EE.NIESolver.MathNet.Interfaces;
+using EE.NIESolver.MathNet.Services;
+using EE.NIESolver.Web.Extractions;
+using EE.NIESolver.Web.Factories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -28,6 +33,11 @@ namespace EE.NIESolver.Web
                     options.UseNpgsql(conntectionString, opt => opt.MigrationsAssembly(migrationAssembly));
                 })
                 .AddScoped<IConstantService, ConstantService>()
+                .AddScoped<IInterpolationService, LinearInterpolationService>()
+                .AddScoped<IFunctionExtractor, FunctionExtractor>()
+                .AddScoped<IMathNetFactory, MathNetFactory>()
+                .AddScoped<NetFactory>()
+                .AddScoped<MethodFactory>()
                 .WithDataLayer()
                 .AddMvc();
 

@@ -7,11 +7,11 @@ using Microsoft.EntityFrameworkCore;
 namespace EE.NIESolver.DataLayer.Repositories
 {
     [AttributeUsage(AttributeTargets.Property)]
-    public class IncludeCollectionAttribute : Attribute
+    public class IncludePropertyAttribute : Attribute
     {
         public string PropertyName { get; set; }
 
-        public IncludeCollectionAttribute(string propertyName = null)
+        public IncludePropertyAttribute(string propertyName = null)
         {
             
         }
@@ -30,12 +30,12 @@ namespace EE.NIESolver.DataLayer.Repositories
         {
             IQueryable<TEntity> result =  _context.Set<TEntity>();
             var properties = typeof(TEntity).GetProperties()
-                .Where(x => x.CustomAttributes.Any(a => a.AttributeType == typeof(IncludeCollectionAttribute)));
+                .Where(x => x.CustomAttributes.Any(a => a.AttributeType == typeof(IncludePropertyAttribute)));
             foreach (var property in properties)
             {
                 var attribute = property
-                    .GetCustomAttributes(typeof(IncludeCollectionAttribute), false)
-                    .OfType<IncludeCollectionAttribute>()
+                    .GetCustomAttributes(typeof(IncludePropertyAttribute), false)
+                    .OfType<IncludePropertyAttribute>()
                     .First();
                 var propertyName = !string.IsNullOrEmpty(attribute.PropertyName)
                     ? attribute.PropertyName

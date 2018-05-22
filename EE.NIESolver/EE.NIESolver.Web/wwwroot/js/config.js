@@ -17,7 +17,7 @@
             {
                 name: "Эксперименты",
                 url: "/experiment/index",
-                icon: "sience alternate"
+                icon: "calculator"
             }
         ]
     });

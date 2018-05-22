@@ -22,7 +22,8 @@ namespace EE.NIESolver.Web.Controllers
                     Id = x.Id,
                     Name = x.Name,
                     Description = x.Description,
-                    MethodType = x.MethodTypeId.GetDescription<MethodTypes>()
+                    MethodType = x.MethodTypeId.GetDescription<MethodTypes>(),
+                    ExperimentCount = x.Experiments.Count
                 });
             return JsonResult(true, items);
         }

@@ -19,7 +19,10 @@ namespace EE.NIESolver.DataLayer.Entities.Solver
         [ForeignKey(nameof(MethodTypeId))]
         public virtual DbConstant MethodType { get; set; }
 
-        [IncludeCollection]
+        [IncludeProperty]
         public virtual ICollection<DbMethodParameter> Parameteres { get; set; }
+
+        [IncludeProperty]
+        public virtual ICollection<DbExperiment> Experiments { get; set; }
     }
 }

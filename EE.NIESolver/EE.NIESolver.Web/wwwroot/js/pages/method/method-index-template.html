@@ -19,11 +19,12 @@
                 <a class="header">{{item.name}}</a>
                 <div class="meta">
                     <span>Размерность: {{item.spaceSize}}</span>
+                    <span>Экспериментов: {{item.experimentCount}}</span>
                 </div>
                 <div class="description">
                     <p>{{item.description}}</p>
                 </div>
-                <div class="extra">
+                <div ng-if="!item.experimentCount" class="extra">
                     <a class="ui button mini orange" href="#!/method/edit/{{item.id}}">Редактировать</a>
                     <a class="ui button mini orange" ng-click="methodIndexCtrl.remove(id)">Удалить</a>
                 </div>

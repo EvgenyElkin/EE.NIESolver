@@ -4,6 +4,7 @@ using System.Linq;
 using EE.NIESolver.DataLayer.Constants.Solver;
 using EE.NIESolver.DataLayer.Entities.Solver;
 using EE.NIESolver.MathNet;
+using EE.NIESolver.Web.Extractions;
 
 namespace EE.NIESolver.Web.Factories
 {
@@ -27,11 +28,9 @@ namespace EE.NIESolver.Web.Factories
                     return _factory
                         .CreateMathNet2()
                         .SetArea(double.Parse(cache["X"].Value), int.Parse(cache["T"].Value))
-                        .SetInitialConditions(
-                            _extractor.ExtractRightFunction<Func<double, double>>(cache["INITIAL"].Value))
-                        .SetLeftBorder(_extractor.ExtractRightFunction<Func<double, double>>(cache["LEFT"].Value))
-                        .SetHistory(double.Parse(cache["TAY"].Value),
-                            _extractor.ExtractRightFunction<Func<double, double, double>>(cache["HISTORY"].Value))
+                        .SetInitialConditions(_extractor.ExtractR1Function(cache["INITIAL"].Value))
+                        .SetLeftBorder(_extractor.ExtractR1Function(cache["LEFT"].Value))
+                        .SetHistory(double.Parse(cache["TAY"].Value), _extractor.ExtractR2Function(cache["HISTORY"].Value))
                         .Build(double.Parse(cache["h"].Value), double.Parse(cache["d"].Value));
                 default:
                     throw new NotSupportedException($"{methodType} not supported");
