@@ -5,14 +5,19 @@ namespace EE.NIESolver.Web.Extractions.FunctionExtensions
 {
     public class R2Function : FunctionExtension
     {
-        private readonly Func<double, double, double> _func;
+        private Func<double, double, double> _func;
         private readonly double[] _args;
         private readonly string[] _argNames = {"x", "t"};
 
-        public R2Function(Func<double, double, double> func)
+        public R2Function(Func<double, double, double> func = null)
         {
             _func = func;
             _args = new double[2];
+        }
+
+        public void SetFunction(Func<double, double, double> func)
+        {
+            _func = func;
         }
 
         public int getParametersNumber()

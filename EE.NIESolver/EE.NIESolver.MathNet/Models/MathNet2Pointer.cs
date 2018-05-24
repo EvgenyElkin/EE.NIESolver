@@ -1,4 +1,7 @@
 // ReSharper disable once CheckNamespace
+
+using System;
+
 namespace EE.NIESolver.MathNet
 {
     public class MathNet2Pointer : I2Pointer
@@ -25,6 +28,8 @@ namespace EE.NIESolver.MathNet
 
         public double GetValue(int di, int dj)
         {
+            if (_i + di < 0 || _i + di >= Net.Width) di -= 1 * Math.Sign(di); 
+            if (_j + dj < 0 || _j + dj >= Net.Height) dj -= 1 * Math.Sign(dj); 
             return Net.Get(_i + di, _j + dj);
         }
 
