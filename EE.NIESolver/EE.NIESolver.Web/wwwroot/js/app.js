@@ -15,25 +15,31 @@
                   templateUrl: "js/pages/home/home-template.html",
                   controller: "HomeController",
                   controllerAs: "homeCtrl"
-          })
+              })
           .when("/method/index",
               {
                   templateUrl: "js/pages/method/method-index-template.html",
                   controller: "MethodIndexController",
                   controllerAs: "methodIndexCtrl"
-          })
+              })
           .when("/method/edit/:methodId",
               {
                   templateUrl: "js/pages/method/method-edit-template.html",
                   controller: "MethodEditController",
                   controllerAs: "methodEditCtrl"
-          })
+              })
           .when("/experiment/index",
               {
                   templateUrl: "js/pages/experiment/experiment-index-template.html",
                   controller: "ExperimentIndexController",
                   controllerAs: "experimentIndexCtrl"
-          })
+              })
+          .when("/experiment/display/:experimentId",
+              {
+                  templateUrl: "js/pages/experiment/experiment-display-template.html",
+                  controller: "ExperimentDisplayController",
+                  controllerAs: "experimentDisplayCtrl"
+              })
           .when("/experiment/create",
               {
                   templateUrl: "js/pages/experiment/experiment-create-template.html",

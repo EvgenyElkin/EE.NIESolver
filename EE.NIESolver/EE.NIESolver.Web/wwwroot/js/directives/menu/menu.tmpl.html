@@ -7,7 +7,7 @@
     </a>
     <sm-accordion id="menu">
         <a ng-repeat="item in menu" class="item" href="#!{{::item.url}}" ng-class="{'active':(selectedMenu == item.url)}">
-            <i class="icon orange {{::item.icon}}"></i>{{::item.name}}
+            <i class="icon orange large {{::item.icon}}"></i>{{::item.name}}
         </a>
     </sm-accordion>
 </div>

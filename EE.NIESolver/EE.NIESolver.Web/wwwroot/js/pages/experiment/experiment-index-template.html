@@ -21,8 +21,7 @@
                     <p>{{item.description}}</p>
                 </div>
                 <div  class="extra">
-                    <a class="ui button mini orange" href="javascript: ">Посмотреть</a>
-                    <a class="ui button mini orange" ng-click="experimentIndexCtrl.run(item)">Запустить</a>
+                    <a class="ui button mini orange" href="#!/experiment/display/{{item.id}}">Подробнее</a>
                     <a class="ui button mini orange" ng-click="experimentIndexCtrl.remove(item.id)">Удалить</a>
                 </div>
             </div>

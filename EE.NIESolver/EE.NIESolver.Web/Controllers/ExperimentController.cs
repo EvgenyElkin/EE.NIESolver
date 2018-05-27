@@ -3,6 +3,7 @@ using System.Linq;
 using EE.NIESolver.DataLayer.Constants;
 using EE.NIESolver.DataLayer.Constants.Solver;
 using EE.NIESolver.DataLayer.Entities.Solver;
+using EE.NIESolver.DataLayer.QueryHelpers;
 using EE.NIESolver.DataLayer.Repositories;
 using EE.NIESolver.Solver.Runners;
 using EE.NIESolver.Web.Factories;
@@ -26,7 +27,7 @@ namespace EE.NIESolver.Web.Controllers
 
         public JsonResult GetAll()
         {
-            var items = Repository.Select<DbExperiment>()
+            var items = Repository.Query<DbExperiment>()
                 .Select(x => new ExperimentRegistryModel
                 {
                     Id = x.Id,
@@ -67,7 +68,7 @@ namespace EE.NIESolver.Web.Controllers
         [HttpGet]
         public JsonResult GetParameters(int methodId)
         {
-            var parameters = Repository.Select<DbMethodParameter>()
+            var parameters = Repository.Query<DbMethodParameter>()
                 .Where(x => x.MethodId == methodId)
                 .Select(x => new ConstantItem
                 {
@@ -81,10 +82,32 @@ namespace EE.NIESolver.Web.Controllers
 
         #endregion
 
+        #region Простмотр эксперимента
+
+        [HttpGet]
+        public JsonResult Display(int id)
+        {
+            var entity = Repository.Query<DbExperiment>()
+                .WithAllProperties()
+                .FirstOrDefault(x => x.Id == id);
+
+            if (entity == null)
+            {
+                throw new ArgumentException();
+            }
+
+            var model = new ExperimentModel();
+            model.SetModel(entity);
+
+            return JsonResult(true, model);
+        }
+
+        #endregion
+
         #region Удаление эксперимента
 
         [HttpDelete]
-        public JsonResult DeleteExperiment(int id)
+        public JsonResult Delete(int id)
         {
             var entity = Repository.Get<DbExperiment>(id);
             if (entity == null)
@@ -101,15 +124,15 @@ namespace EE.NIESolver.Web.Controllers
         #region Выполнение эксперимента
 
         [HttpGet]
-        public JsonResult RunExperiment(int experimentId)
+        public JsonResult Run(int id)
         {
-            var entity = Repository.Get<DbExperiment>(experimentId);
+            var entity = Repository.Get<DbExperiment>(id);
             if (entity == null)
             {
                 return JsonResult(false);
             }
 
-            var values = Repository.Select<DbMethodParameterValue>(x => x.ExperimentId == experimentId);
+            var values = Repository.Query<DbMethodParameterValue>(x => x.ExperimentId == id);
             var net = _netFactory.Create(entity.Method.MethodTypeId.GetEnum<MethodTypes>(), values);
             var method = _methodFactory.CreateMethod2(entity.Method.MethodTypeId.GetEnum<MethodTypes>(), values);
             var runner = new ClassicRunner(method);
@@ -142,7 +165,5 @@ namespace EE.NIESolver.Web.Controllers
         }
 
         #endregion
-
-
     }
 }

@@ -16,7 +16,7 @@ namespace EE.NIESolver.Web.Controllers
 
         public JsonResult GetAll()
         {
-            var items = Repository.Select<DbMethod>()
+            var items = Repository.Query<DbMethod>()
                 .Select(x => new MethodRegistryModel
                 {
                     Id = x.Id,

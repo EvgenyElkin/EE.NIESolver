@@ -17,7 +17,7 @@ namespace EE.NIESolver.DataLayer.Constants
             Initialize(repository);
 
             ConstantItem Converter(DbConstant x) => new ConstantItem {Id = x.Id, Value = x.Name, Description = x.Description ?? x.Name};
-            var enums = repository.Select<DbConstant>().ToArray();
+            var enums = repository.Query<DbConstant>().ToArray();
 
             _cache = enums.ToDictionary(x => x.Id, Converter);
             _index = enums.ToDictionary(x => x.Name, Converter);
@@ -66,7 +66,7 @@ namespace EE.NIESolver.DataLayer.Constants
                 }
             }
 
-            var databaseConstants = repository.Select<DbConstant>().ToArray();
+            var databaseConstants = repository.Query<DbConstant>().ToArray();
             var newConstants = codeConstants.GroupJoin(databaseConstants,
                     x => x,
                     x => x.Name,

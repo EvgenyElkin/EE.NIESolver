@@ -12,12 +12,12 @@
             {
                 name: "Методы",
                 url: "/method/index",
-                icon: "external alternate",
+                icon: "superscript",
             },
             {
                 name: "Эксперименты",
                 url: "/experiment/index",
-                icon: "calculator"
+                icon: "indent"
             }
         ]
     });

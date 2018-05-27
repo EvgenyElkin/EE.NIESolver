@@ -15,11 +15,12 @@ namespace EE.NIESolver.Web.Models.Experiments
         public int MethodId { get; set; }
         public string MethodName { get; set; }
         public MethodParameterValue[] Values { get; set; }
+
         public IEnumerable<ConstantItem> Methods;
 
         public void InitializeEdit(IDataRepository repository)
         {
-            Methods = repository.Select<DbMethod>()
+            Methods = repository.Query<DbMethod>()
                 .Select(x => new ConstantItem
                 {
                     Id = x.Id,

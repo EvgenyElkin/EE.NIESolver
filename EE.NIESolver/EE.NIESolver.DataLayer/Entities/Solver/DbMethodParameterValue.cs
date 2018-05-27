@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using EE.NIESolver.DataLayer.Attrubutes;
 using EE.NIESolver.DataLayer.Entities.Interfaces;
 using EE.NIESolver.DataLayer.Repositories;
 

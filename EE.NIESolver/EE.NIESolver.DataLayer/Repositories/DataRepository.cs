@@ -1,22 +1,12 @@
 ﻿using System;
 using System.Linq;
 using System.Linq.Expressions;
+using EE.NIESolver.DataLayer.Attrubutes;
 using EE.NIESolver.DataLayer.Entities.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 namespace EE.NIESolver.DataLayer.Repositories
 {
-    [AttributeUsage(AttributeTargets.Property)]
-    public class IncludePropertyAttribute : Attribute
-    {
-        public string PropertyName { get; set; }
-
-        public IncludePropertyAttribute(string propertyName = null)
-        {
-            
-        }
-    }
-
     public class DataRepository : IDataRepository
     {
         private readonly SolverContext _context;
@@ -26,7 +16,7 @@ namespace EE.NIESolver.DataLayer.Repositories
             _context = context;
         }
         
-        public IQueryable<TEntity> Select<TEntity>() where TEntity : class, IEntity
+        public IQueryable<TEntity> Query<TEntity>() where TEntity : class, IEntity
         {
             IQueryable<TEntity> result =  _context.Set<TEntity>();
             var properties = typeof(TEntity).GetProperties()
@@ -46,20 +36,20 @@ namespace EE.NIESolver.DataLayer.Repositories
         }
         
 
-        public IQueryable<TEntity> Select<TEntity>(Expression<Func<TEntity, bool>> selector)
+        public IQueryable<TEntity> Query<TEntity>(Expression<Func<TEntity, bool>> selector)
             where TEntity : class, IEntity
         {
-            return Select<TEntity>().Where(selector);
+            return Query<TEntity>().Where(selector);
         }
 
         public TEntity Get<TEntity>(int id) where TEntity : class, IDomainEntity
         {
-            return Select<TEntity>().FirstOrDefault(x => x.Id == id);
+            return Query<TEntity>().FirstOrDefault(x => x.Id == id);
         }
 
         public TEntity Get<TEntity>(Expression<Func<TEntity, bool>> selector) where TEntity : class, IDomainEntity
         {
-            return Select<TEntity>().FirstOrDefault(selector);
+            return Query<TEntity>().FirstOrDefault(selector);
         }
 
         public void Add<TEntity>(TEntity entity) where TEntity : class, IDomainEntity

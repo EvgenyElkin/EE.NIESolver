@@ -7,8 +7,8 @@ namespace EE.NIESolver.DataLayer.Repositories
 {
     public interface IDataRepository
     {
-        IQueryable<TEntity> Select<TEntity>() where TEntity : class, IEntity;
-        IQueryable<TEntity> Select<TEntity>(Expression<Func<TEntity, bool>> selector) where TEntity : class, IEntity;
+        IQueryable<TEntity> Query<TEntity>() where TEntity : class, IEntity;
+        IQueryable<TEntity> Query<TEntity>(Expression<Func<TEntity, bool>> selector) where TEntity : class, IEntity;
 
         TEntity Get<TEntity>(int id) where TEntity : class, IDomainEntity;
         TEntity Get<TEntity>(Expression<Func<TEntity, bool>> selector) where TEntity : class, IDomainEntity;

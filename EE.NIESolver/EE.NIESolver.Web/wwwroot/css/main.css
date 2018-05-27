@@ -16,6 +16,10 @@
     background: transparent;
 }
 
+menu {
+    padding-left: 0 !important;
+}
+
 #main-content {
     padding: 0 20px;
     padding-right: 20%;

@@ -19,7 +19,7 @@
             });
 
         self.remove = function(id) {
-            $http.delete("/Experiment/DeleteExperiment?id=" + id)
+            $http.delete("/Experiment/Delete?id=" + id)
                 .then(function(response) {
                     if (response.data.isSuccess) {
                         self.data = _.filter(self.data, function(x) { return x.id !== id });
@@ -28,7 +28,7 @@
         };
 
         self.run = function(experiment) {
-            $http.get("/Experiment/RunExperiment?experimentId=" + experiment.id)
+            $http.get("/Experiment/Run?id=" + experiment.id)
                 .then(function (response) {
                     if (response.data.isSuccess) {
                         experiment.resultCount++;
