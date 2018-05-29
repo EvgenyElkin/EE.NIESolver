@@ -1,11 +1,12 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using EE.NIESolver.DataLayer.Entities.Common;
+using EE.NIESolver.DataLayer.Entities.Interfaces;
 
 namespace EE.NIESolver.DataLayer.Entities.Solver
 {
     [Table("Runner", Schema = "solver")]
-    public class DbRunnerType
+    public class DbRunnerType : IDomainEntity
     {
         [Key]
         [Required]

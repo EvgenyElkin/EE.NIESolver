@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using EE.NIESolver.DataLayer.Attrubutes;
+using EE.NIESolver.DataLayer.Entities.Common;
 using EE.NIESolver.DataLayer.Entities.Interfaces;
 
 namespace EE.NIESolver.DataLayer.Entities.Solver
@@ -19,5 +22,12 @@ namespace EE.NIESolver.DataLayer.Entities.Solver
         public DateTime Date { get; set; }
         public int Duration { get; set; }
         public string Result { get; set; }
+        public int StatusId { get; set; }
+
+        [ForeignKey(nameof(StatusId))]
+        public virtual DbConstant Status { get; set; }
+
+        [IncludeProperty]
+        public virtual ICollection<DbExperimentRunParameter> Parameters { get; set; }
     }
 }

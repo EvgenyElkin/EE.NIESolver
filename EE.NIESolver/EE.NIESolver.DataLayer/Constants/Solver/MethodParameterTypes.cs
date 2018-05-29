@@ -8,6 +8,11 @@
         Constant,
 
         /// <summary>
+        /// Переменная для эксперимента
+        /// </summary>
+        RunVariable,
+
+        /// <summary>
         /// Одномерная функция
         /// </summary>
         R1Function,

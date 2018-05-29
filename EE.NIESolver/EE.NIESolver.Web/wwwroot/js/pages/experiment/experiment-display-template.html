@@ -67,12 +67,13 @@
             <form class="ui form">
                 <table class="ui very basic table">
                     <tbody>
-                    <tr ng-repeat="parameter in experimentDisplayCtrl.run.parameters">
-                        <td><input type="number" ng-model="parameter.n" placeholder="(N) Количество разбиений по пространству"></td>
-                        <td><input type="number" ng-model="parameter.m" placeholder="(M) Количество разбиений по времени"></td>
+                    <tr ng-repeat="run in experimentDisplayCtrl.run.runs">
+                        <td ng-repeat="parameter in run.parameters">
+                            <input type="number" ng-model="parameter.value" placeholder="{{parameter.name}}">
+                        </td>
                         <td class="one wide">
                             <a ng-click="experimentDisplayCtrl.removeRunParameter(parameter)" href="javascrit: ">
-                                <i ng-if="experimentDisplayCtrl.run.parameters.length > 1" class="ui icon orange remove"></i>
+                                <i ng-if="experimentDisplayCtrl.run.runs.length > 1" class="ui icon orange remove"></i>
                             </a>
                         </td>
                     </tr>
@@ -92,21 +93,40 @@
                     <label>Способ обхода сетки</label>
                     <sm-dropdown class="ui selection dropdown multiple"
                                  model="experimentDisplayCtrl.run.runners"
-                                 items="experimentDisplayCtrl.run.runnerTypes"
+                                 items="experimentDisplayCtrl.model.runners"
                                  label="item.value"
                                  value="item.id" default-text="'Выберите способ обхода'">
                     </sm-dropdown>
                 </div>
-                <button ng-click="experimentDisplayCtrl.test()" class="ui orange button">
+                <button ng-click="experimentDisplayCtrl.runExperiment()" class="ui orange button">
                     <i class="play icon"></i>Запустить
                 </button>
             </form>
         </div>
-        <div class="ui segment orange" ng-if="false">
+        <div class="ui segment orange" ng-if="experimentDisplayCtrl.model.results.length > 0">
             <h4 class="ui horizontal divider header">
                 <i class="history icon"></i>Результаты
-
             </h4>
+            <table class="ui celled table">
+                <thead>
+                <tr>
+                    <th>Дата</th>
+                    <th>Статус</th>
+                    <th>Способ обхода</th>
+                    <th>Параметры</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="result in experimentDisplayCtrl.model.results">
+                    <td>{{result.date | date: "dd.MM.yyyy HH:mm"}}</td>
+                    <td>{{result.status}}</td>
+                    <td>{{result.runnerName}}</td>
+                    <td>{{result.parameters}}</td>
+                    <td>Подробнее</td>
+                </tr>
+                </tbody>
+            </table>
         </div>
     </div>
 </div>
