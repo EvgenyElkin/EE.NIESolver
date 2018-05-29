@@ -7,6 +7,8 @@ using EE.NIESolver.MathNet.Interfaces;
 using EE.NIESolver.MathNet.Services;
 using EE.NIESolver.Web.Extractions;
 using EE.NIESolver.Web.Factories;
+using EE.NIESolver.Web.Services;
+using EE.NIESolver.Web.Services.Interfaces;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -36,8 +38,10 @@ namespace EE.NIESolver.Web
                 .AddScoped<IInterpolationService, LinearInterpolationService>()
                 .AddScoped<IFunctionExtractor, FunctionExtractor>()
                 .AddScoped<IMathNetFactory, MathNetFactory>()
+                .AddScoped<ICalculationService, CalculationService>()
                 .AddScoped<NetFactory>()
                 .AddScoped<MethodFactory>()
+                .AddScoped<RunnerFactory>()
                 .WithDataLayer()
                 .AddMvc();
 

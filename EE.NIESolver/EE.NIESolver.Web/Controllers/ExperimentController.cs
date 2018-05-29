@@ -1,26 +1,27 @@
 ﻿using System;
 using System.Linq;
+using System.Text.RegularExpressions;
 using EE.NIESolver.DataLayer.Constants;
 using EE.NIESolver.DataLayer.Constants.Account;
 using EE.NIESolver.DataLayer.Constants.Solver;
 using EE.NIESolver.DataLayer.Entities.Solver;
 using EE.NIESolver.DataLayer.QueryHelpers;
 using EE.NIESolver.DataLayer.Repositories;
-using EE.NIESolver.Web.Factories;
+using EE.NIESolver.MathNet;
 using EE.NIESolver.Web.Models.Experiments;
+using EE.NIESolver.Web.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Routing;
 
 namespace EE.NIESolver.Web.Controllers
 {
     public class ExperimentController : EntityController<ExperimentModel, DbExperiment>
     {
-        private readonly NetFactory _netFactory;
-        private readonly MethodFactory _methodFactory;
+        private readonly ICalculationService _calculationService;
 
-        public ExperimentController(IDataRepository repository, NetFactory netFactory, MethodFactory methodFactory) : base(repository)
+        public ExperimentController(IDataRepository repository, ICalculationService calculationService) : base(repository)
         {
-            _netFactory = netFactory;
-            _methodFactory = methodFactory;
+            _calculationService = calculationService;
         }
 
         #region Реестр экспериментов
@@ -153,30 +154,29 @@ namespace EE.NIESolver.Web.Controllers
                 };
                 entity.Results.Add(result);
             }
-
-            //var values = Repository.Query<DbMethodParameterValue>(x => x.ExperimentId == model.ExperimentId);
-            //var net = _netFactory.Create(entity.Method.MethodTypeId.GetEnum<MethodTypes>(), values);
-            //var method = _methodFactory.CreateMethod2(entity.Method.MethodTypeId.GetEnum<MethodTypes>(), values);
-            //var runner = new ClassicRunner(method);
-            //runner.Run(net);
-            //
-            //double ExpectedFunc(double x, double t) => t * Math.Sin(Math.PI * x);
-            //
-            //var result = double.MinValue;
-            //for (var j = 0; j <= net.Height; j++)
-            //for (var i = 0; i <= net.Width; i++)
-            //{
-            //    var expected = ExpectedFunc(i * net.H, j * net.D);
-            //    var error = Math.Abs(expected - net.Get(i, j));
-            //    if (error > result)
-            //    {
-            //        result = error;
-            //    }
-            //}
             
             Repository.Apply();
 
-            return JsonResult(true);
+            var waitStatus = ExperimentStatusTypes.Wait.GetId();
+            foreach (var result in entity.Results.Where(x => x.StatusId == waitStatus))
+            {
+                _calculationService.Calculate(result.Id);
+            }
+
+            Repository.Apply();
+
+            var results = Repository.Query<DbExperimentResult>(x => x.ExperimentId == model.ExperimentId)
+                .OrderByDescending(x => x.Date)
+                .Select(x => new ExperimentResultModel
+                {
+                    Id = x.Id,
+                    Status = x.Status.Description,
+                    Date = x.Date,
+                    RunnerName = x.RunnerType.Name,
+                    Parameters = x.Parameters.ToDictionary(p => p.Code, p => p.Value)
+                });
+
+            return JsonResult(true, results);
         }
 
         #endregion

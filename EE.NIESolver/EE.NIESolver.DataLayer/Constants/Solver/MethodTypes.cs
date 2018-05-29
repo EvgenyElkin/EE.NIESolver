@@ -3,8 +3,8 @@
     public enum MethodTypes
     {
         /// <summary>
-        /// Двумерный метод симметричных производных
+        /// Одномерный по пространству с историей
         /// </summary>
-        R2SymmetrizedDerivativesMethod
+        R1MethodWithHistory
     }
 }

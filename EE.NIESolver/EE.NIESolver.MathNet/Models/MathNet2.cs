@@ -132,5 +132,10 @@ namespace EE.NIESolver.MathNet
         {
             return _net;
         }
+
+        public double[,] GetResults()
+        {
+            return _net;
+        }
     }
 }

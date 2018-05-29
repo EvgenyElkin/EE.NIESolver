@@ -9,7 +9,8 @@ namespace EE.NIESolver.Web.Models.Methods
         public string Name { get; set; }
         public string Description { get; set; }
         public string Code { get; set; }
-        public int TypeId { get; set; }
+        public int ParameterTypeId { get; set; }
+        public bool IsSystem { get; set; }
 
         public void SetModel(DbMethodParameter entity)
         {
@@ -17,7 +18,8 @@ namespace EE.NIESolver.Web.Models.Methods
             Name = entity.Name;
             Description = entity.Description;
             Code = entity.Code;
-            TypeId = entity.ParameterTypeId;
+            IsSystem = entity.IsSystem;
+            ParameterTypeId = entity.ParameterTypeId;
         }
 
         public void ApplyModel(DbMethodParameter entity)
@@ -25,7 +27,8 @@ namespace EE.NIESolver.Web.Models.Methods
             entity.Name = Name;
             entity.Description = Description;
             entity.Code = Code;
-            entity.ParameterTypeId = TypeId;
+            entity.IsSystem = IsSystem;
+            entity.ParameterTypeId = ParameterTypeId;
         }
     }
 }

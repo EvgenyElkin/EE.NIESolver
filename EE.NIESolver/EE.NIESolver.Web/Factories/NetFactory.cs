@@ -19,19 +19,22 @@ namespace EE.NIESolver.Web.Factories
             _extractor = extractor;
         }
 
-        public MathNet2 Create(MethodTypes methodType, IEnumerable<DbMethodParameterValue> parameters)
+        public MathNet2 Create(MethodTypes methodType, IEnumerable<DbMethodParameterValue> parameters, IEnumerable<DbExperimentRunParameter> runParameters)
         {
             var cache = parameters.ToDictionary(x => x.Parameter.Code);
+            var runCache = runParameters.ToDictionary(x => x.Code, x => int.Parse(x.Value));
             switch (methodType)
             {
-                case MethodTypes.R2SymmetrizedDerivativesMethod:
+                case MethodTypes.R1MethodWithHistory:
+                    var x = double.Parse(cache["x"].Value);
+                    var t = double.Parse(cache["t"].Value);
                     return _factory
                         .CreateMathNet2()
-                        .SetArea(double.Parse(cache["X"].Value), int.Parse(cache["T"].Value))
-                        .SetInitialConditions(_extractor.ExtractR1Function(cache["INITIAL"].Value))
-                        .SetLeftBorder(_extractor.ExtractR1Function(cache["LEFT"].Value))
-                        .SetHistory(double.Parse(cache["TAY"].Value), _extractor.ExtractR2Function(cache["HISTORY"].Value))
-                        .Build(double.Parse(cache["h"].Value), double.Parse(cache["d"].Value));
+                        .SetArea(x, t)
+                        .SetInitialConditions(_extractor.ExtractR1Function(cache["initial"].Value))
+                        .SetLeftBorder(_extractor.ExtractR1Function(cache["border"].Value))
+                        .SetHistory(double.Parse(cache["tay"].Value), _extractor.ExtractR2Function(cache["u"].Value))
+                        .Build(x / runCache["n"], t / runCache["m"]);
                 default:
                     throw new NotSupportedException($"{methodType} not supported");
             }

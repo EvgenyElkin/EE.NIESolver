@@ -39,7 +39,6 @@
         };
 
         self.runExperiment = function () {
-            console.log(1);
             var runParameters = {
                 ExperimentId: self.model.id,
                 RunnerIds: self.run.runners,
@@ -50,8 +49,10 @@
                         return { Parameters: parameters };
                     })
             };
-            $http.post("/Experiment/Run", runParameters);
-            console.log(runParameters);
+            $http.post("/Experiment/Run", runParameters)
+                .then(function (response) {
+                    self.model.results = response.data.item;
+                });
         }
 
     }

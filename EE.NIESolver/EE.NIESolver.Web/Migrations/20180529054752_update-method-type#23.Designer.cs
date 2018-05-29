@@ -11,9 +11,10 @@ using System;
 namespace EE.NIESolver.Web.Migrations
 {
     [DbContext(typeof(SolverContext))]
-    partial class SolverContextModelSnapshot : ModelSnapshot
+    [Migration("20180529054752_update-method-type#23")]
+    partial class updatemethodtype23
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -216,31 +217,6 @@ namespace EE.NIESolver.Web.Migrations
                     b.ToTable("Runner","solver");
                 });
 
-            modelBuilder.Entity("EE.NIESolver.DataLayer.Entities.Solver.DbSystemMethodParameter", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("Code");
-
-                    b.Property<string>("Description");
-
-                    b.Property<int>("MethodTypeId");
-
-                    b.Property<string>("Name")
-                        .IsRequired();
-
-                    b.Property<int>("ParameterTypeId");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("MethodTypeId");
-
-                    b.HasIndex("ParameterTypeId");
-
-                    b.ToTable("SystemMethodParameter","solver");
-                });
-
             modelBuilder.Entity("EE.NIESolver.DataLayer.Entities.Account.DbRole", b =>
                 {
                     b.HasOne("EE.NIESolver.DataLayer.Entities.Common.DbConstant", "Role")
@@ -326,19 +302,6 @@ namespace EE.NIESolver.Web.Migrations
                     b.HasOne("EE.NIESolver.DataLayer.Entities.Common.DbConstant", "MethodType")
                         .WithMany()
                         .HasForeignKey("MethodTypeId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("EE.NIESolver.DataLayer.Entities.Solver.DbSystemMethodParameter", b =>
-                {
-                    b.HasOne("EE.NIESolver.DataLayer.Entities.Common.DbConstant", "MethodType")
-                        .WithMany()
-                        .HasForeignKey("MethodTypeId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("EE.NIESolver.DataLayer.Entities.Common.DbConstant", "ParameterType")
-                        .WithMany()
-                        .HasForeignKey("ParameterTypeId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618

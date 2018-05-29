@@ -29,6 +29,7 @@ namespace EE.NIESolver.DataLayer
         private DbSet<DbMethodParameter> MethodParameters { get; set; }
         private DbSet<DbExperiment> Experiments { get; set; }
         private DbSet<DbRunnerType> RunnerTypes { get; set; }
+        private DbSet<DbSystemMethodParameter> SystemParameters { get; set; }
 
         #endregion
 

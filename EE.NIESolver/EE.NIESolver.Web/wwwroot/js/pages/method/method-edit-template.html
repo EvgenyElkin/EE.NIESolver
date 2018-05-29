@@ -24,6 +24,11 @@
             <textarea ng-model="methodEditCtrl.model.description" name="description" placeholder="Описание" required=""></textarea>
         </div>
 
+        <div class="field">
+            <label>Выражение метода</label>
+            <textarea ng-model="methodEditCtrl.model.methodExpression" type="text" name="expression" placeholder="Выражение для вычисление следующего узла" required ></textarea>
+        </div>
+
         <h4 class="ui dividing header">Параметры</h4>
 
         <div ng-if="!methodEditCtrl.model.parameteres.length"
@@ -44,19 +49,23 @@
             <tbody>
                 <tr ng-repeat="(index, param) in methodEditCtrl.model.parameteres">
                     <td>
-                        <input ng-model="param.name" type="text" name="name" placeholder="Название" required>
+                        <input ng-if="!param.isSystem" ng-model="param.name" type="text" name="name" placeholder="Название" required>
+                        <span ng-if="param.isSystem">{{param.name}}</span>
                     </td>
                     <td>
-                        <input ng-model="param.description" type="text" name="description" placeholder="Описание" required>
+                        <input ng-if="!param.isSystem" ng-model="param.description" type="text" name="description" placeholder="Описание" required>
+                        <span ng-if="param.isSystem">{{param.description}}</span>
                     </td>
                     <td>
-                        <input ng-model="param.code" type="text" name="code" placeholder="Код" required>
+                        <input ng-if="!param.isSystem" ng-model="param.code" type="text" name="code" placeholder="Код" required>
+                        <span ng-if="param.isSystem">{{param.code}}</span>
                     </td>
                     <td class="collapsing">
-                        <sm-dropdown model="param.typeId" items="methodEditCtrl.model.methodParameterTypes" label="item.description" value="item.id" default-text="'Тип'" class="ui selection dropdown"></sm-dropdown>
+                        <sm-dropdown ng-if="!param.isSystem" model="param.parameterTypeId" items="methodEditCtrl.model.methodParameterTypes" label="item.description" value="item.id" default-text="'Тип'" class="ui selection dropdown"></sm-dropdown>
+                        <span ng-if="param.isSystem">{{methodEditCtrl.getParameterName(param.parameterTypeId)}}</span>
                     </td>
                     <td class="right aligned collapsing">
-                        <a href="javascript: " ng-click="methodEditCtrl.removeParameter(index)">
+                        <a ng-if="!param.isSystem" href="javascript: " ng-click="methodEditCtrl.removeParameter(index)">
                             <i class="ui icon orange remove"></i>
                         </a>
                     </td>

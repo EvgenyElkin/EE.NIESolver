@@ -39,7 +39,7 @@ namespace EE.NIESolver.Web.Controllers
         public JsonResult Edit(int? methodId)
         {
             var model = GetModel(methodId);
-            model.InitializeEdit();
+            model.InitializeEdit(Repository);
             return JsonResult(true, model);
         }
 
