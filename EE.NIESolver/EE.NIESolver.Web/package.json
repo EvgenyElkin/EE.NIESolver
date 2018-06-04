@@ -1,0 +1,11 @@
+{
+  "version": "1.0.0",
+  "name": "asp.net",
+  "private": true,
+  "directories": {
+   "lib": "wwwroot/lib/"
+  },
+  "dependencies": {
+    "angular-chart.js" : "1.1.1"
+  }
+}

@@ -7,10 +7,10 @@ namespace EE.NIESolver.DataLayer.Entities.Solver
     [Table("DbExperimentRunParameter", Schema = "solver")]
     public class DbExperimentRunParameter : IDomainEntity
     {
-        [Key] public int Id { get; set; }
+        [Key]
+        public int Id { get; set; }
 
         public int ExperimentReslutId { get; set; }
-
         [ForeignKey(nameof(ExperimentReslutId))]
         public virtual DbExperimentResult ExperimentResult { get; set; }
 

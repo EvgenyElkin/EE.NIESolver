@@ -1,0 +1,57 @@
+﻿<br />
+
+<div class="ui menu">
+    <div class="item header">
+        <h3>График абсолютной погрешности</h3>
+    </div>
+</div>
+
+<div class="ui grid">
+    <div class="five wide column">
+        <div class="ui segment orange">
+            <h4 class="ui horizontal divider header">
+                <i class="list icon"></i>Параметры
+            </h4>
+            <form class="ui form">
+                <div class="field">
+                    <label>Запуски</label>
+                    <sm-dropdown class="ui selection dropdown multiple"
+                                 model="reportCtrl.model.selectedRuns"
+                                 items="reportCtrl.model.runs"
+                                 label="item.label + '(' + item.runnerName + ')'"
+                                 value="item.id" default-text="'Выберите параметры запуска...'">
+                    </sm-dropdown>
+                </div>
+                <div class="field">
+                    <label>Эталонная функция</label>
+                    <input type="text" ng-model="reportCtrl.model.function" placeholder="Введите функцию..."/>
+                </div>
+                <button ng-click="reportCtrl.build()" class="ui orange button">
+                    <i class="play icon"></i>Построить график
+                </button>
+            </form>
+        </div>
+    </div>
+    <div class="eleven wide column">
+        <div class="ui segment orange">
+            <div ng-if="reportCtrl.state != 'ready'" class="ui vertical rectangle ad" data-text="Vertical Rectangle"></div>
+            <canvas ng-if="reportCtrl.state == 'ready'" class="chart chart-line"
+                    chart-data="reportCtrl.chart.data"
+                    chart-labels="reportCtrl.chart.labels"
+                    chart-series="reportCtrl.chart.series"
+                    chart-colors="reportCtrl.chart.colors"
+                    chart-options="reportCtrl.chart.options"
+                    chart-dataset-override="reportCtrl.chart.datasetOverride">
+            </canvas>
+            <div class="ui dimmer" ng-class="{'active': reportCtrl.state != 'ready'}">
+                <div class="ui text loader" ng-if="reportCtrl.state == 'loading'">Построение...</div>
+                <div class="content" ng-if="reportCtrl.state == 'initialize'">
+                    <h2 class="ui inverted icon header">
+                        <i class="chart line icon"></i>
+                        Постройте график
+                    </h2>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

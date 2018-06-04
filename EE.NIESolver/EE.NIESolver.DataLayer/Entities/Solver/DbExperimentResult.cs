@@ -18,6 +18,7 @@ namespace EE.NIESolver.DataLayer.Entities.Solver
         public virtual DbExperiment Experiment { get; set; }
         public int RunnerTypeId { get; set; }
         [ForeignKey(nameof(RunnerTypeId))]
+        [IncludeProperty]
         public virtual DbRunnerType RunnerType { get; set; }
         public DateTime Date { get; set; }
         public int Duration { get; set; }

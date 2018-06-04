@@ -2,11 +2,10 @@
 using EE.NIESolver.DataLayer.Entities.Interfaces;
 using EE.NIESolver.DataLayer.Repositories;
 using EE.NIESolver.Web.Models.Interfaces;
-using Microsoft.AspNetCore.Mvc;
 
 namespace EE.NIESolver.Web.Controllers
 {
-    public abstract class EntityController<TModel, TDb> : Controller
+    public abstract class EntityController<TModel, TDb> : ControllerBase
         where TModel : class, IModel<TDb>, new()
         where TDb : class, IDomainEntity
     {
@@ -32,13 +31,6 @@ namespace EE.NIESolver.Web.Controllers
             return model;
         }
 
-        protected JsonResult JsonResult(bool result, object item = null)
-        {
-            return Json(new
-            {
-                IsSuccess = result,
-                Item = item
-            });
-        }
+        
     }
 }

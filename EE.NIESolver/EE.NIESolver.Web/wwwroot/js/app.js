@@ -1,7 +1,7 @@
 (function() {
-  angular
-    .module("NIESolverApp", ["ngRoute", "semantic-ui", "angular-md5", "ngStorage"])
-    .config(config);
+    angular
+        .module("NIESolverApp", ["ngRoute", "semantic-ui", "angular-md5", "ngStorage", "chart.js"])
+        .config(config);
     
   config.$inject = ["$routeProvider", "$locationProvider", "$httpProvider"];
     
@@ -45,6 +45,12 @@
                   templateUrl: "js/pages/experiment/experiment-create-template.html",
                   controller: "ExperimentCreateController",
                   controllerAs: "experimentCreateCtrl"
+          })
+          .when("/analisys/error-based-report/:experimentId",
+              {
+                  templateUrl: "js/pages/analisys/error-based-report-template.html",
+                  controller: "ErrorBasedReportController",
+                  controllerAs: "reportCtrl"
               })
           .otherwise({
               redirectTo: "/home/index"
