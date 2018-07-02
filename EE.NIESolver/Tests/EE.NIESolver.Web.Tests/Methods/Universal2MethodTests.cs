@@ -29,7 +29,7 @@ namespace EE.NIESolver.Web.Tests.Methods
             var methodExpression = "(f(x-h/2,t-d/2)*2*h*d+(h-d)*(down-left))/(h+d)+v(-1,-1)";
             var method = new Universal2Method(methodExpression, fExpression, new LinearInterpolationService());
 
-            var solver = new ClassicRunner(method);
+            var solver = new SequentialRunner(method);
             solver.Run(net);
             
             double ExpectedFunc(double x, double t) => t * Math.Sin(Math.PI * x);

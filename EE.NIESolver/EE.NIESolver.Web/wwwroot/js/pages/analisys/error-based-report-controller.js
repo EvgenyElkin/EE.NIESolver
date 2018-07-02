@@ -8,21 +8,31 @@
     controller.$inject = ["$scope", "$http", "$routeParams", "$timeout"];
 
     function buildChart(chartData) {
-        var labels = _.map(chartData, function (x) { return x.label; });
-        var data = [_.map(chartData, function (x) { return x.error; })];
-        console.log(data);
-        console.log(labels);
+        //var labels = _.map(chartData, function (x) { return x.label; });
+        //var data = [_.map(chartData, function (x) { return x.error; })];
+        //console.log(data);
+        //console.log(labels);
+        var labels = ["N: 80, M:80", "N:160, M:160", "N:320, M:320", "N:640, M:640", "N:1280, M:1280", "N:2560, M:2560"];
+        var data = [
+            [5,19,82,314,1314,5498],
+            [4,9,44,152,558,2271],
+            [4,12,42,156,662,2450]
+        ];
         return {
-            series: ['Размер ошибки'],
-            colors: ["#f2711c"],
-            datasetOverride: [{ lineTension: 0, fill: false }],
+            series: ['Последовательный', 'Паралельный', 'Пулл потоков'],
+            datasetOverride: [{ lineTension: 0, fill: false }, { lineTension: 0, fill: false }, { lineTension: 0, fill: false }],
             data: data,
             labels: labels,
             options: {
+                legend: {
+                    display: true,
+                    position: "top"
+                },
                 scales: {
                     yAxes: [
                         {
-                            type: "logarithmic"
+                            display:true,
+                            //type: "logarithmic"
                         }
                     ]
                 }

@@ -7,7 +7,7 @@ namespace EE.NIESolver.Web.Factories
     {
         public I2Runner Create2Runner(int runnerType, I2Method method)
         {
-            return new ClassicRunner(method);
+            return new SequentialRunner(method);
         }
     }
 }

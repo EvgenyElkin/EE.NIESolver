@@ -1,7 +1,9 @@
 using EE.NIESolver.MathNet;
 using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
 using EE.NIESolver.MathNet.Services;
-using EE.NIESolver.Solver;
 using EE.NIESolver.Solver.Methods;
 using EE.NIESolver.Solver.Runners;
 using Xunit;
@@ -19,19 +21,24 @@ namespace EE.NIESolver.Experiments.Experiments
         #region ќдна переменна€ по пространству, с посто€нным запаздыванием
 
         [Theory]
-        [InlineData(40, 20, 2)]
-        [InlineData(40, 40, 2)]
-        [InlineData(40, 80, 2)]
-        [InlineData(80, 80, 2)]
-        [InlineData(160, 80, 3)]
-        [InlineData(320, 160, 4)]
-        //[InlineData(1280, 640, 5)]
+        [InlineData(40, 40, 10)]
+        [InlineData(40, 80, 10)]
+        [InlineData(80, 40, 10)]
+        [InlineData(80, 80, 10)]
+        [InlineData(160, 160, 10)]
+        [InlineData(320, 320, 10)]
+        [InlineData(640, 640, 10)]
+        //[InlineData(1280, 1280, 10)]
+        //[InlineData(2560, 2560, 10)]
         public void OneSpatialVariable_ConstantDelay(int n, int m, int power)
         {
             Log("ќдна переменна€ по пространству, с посто€нным запаздыванием");
             Log("x: (0, 2), t: (-1, 1)");
             Log($"N = {n}; M = {m}");
 
+            var method = new SymmetrizedDerivatedMethod(OneSpatialVariable_ConstantDelay_ExperimentFunction, new LinearInterpolationService());
+
+            var solver = new ParallelRunner(method);
             var net = Inject<IMathNetFactory>()
                 .CreateMathNet2()
                 .SetArea(2, 1)
@@ -40,12 +47,27 @@ namespace EE.NIESolver.Experiments.Experiments
                 .SetHistory(1, (x, t) => t * Math.Sin(Math.PI * x))
                 .Build(2d / n, 1d / n);
             
-            var method = new SymmetrizedDerivatedMethod(OneSpatialVariable_ConstantDelay_ExperimentFunction, new LinearInterpolationService());
-
-            var solver = new ClassicRunner(method);
             solver.Run(net);
-
             AssertSolve(net, (x, t) => t * Math.Sin(Math.PI * x), power);
+            
+            //var times = new List<long>();
+            //for (var i = 0; i < 10; i++)
+            //{
+            //    net = Inject<IMathNetFactory>()
+            //        .CreateMathNet2()
+            //        .SetArea(2, 1)
+            //        .SetInitialConditions(x => 0)
+            //        .SetLeftBorder(x => 0)
+            //        .SetHistory(1, (x, t) => t * Math.Sin(Math.PI * x))
+            //        .Build(2d / n, 1d / n);
+            //
+            //    var watcher = new Stopwatch();
+            //    watcher.Start();
+            //    solver.Run(net);
+            //    watcher.Stop();
+            //    times.Add(watcher.ElapsedMilliseconds);
+            //}
+            //Log($"—реднее врем€ {times.Average()}");
         }
 
         private static double OneSpatialVariable_ConstantDelay_ExperimentFunction(double x, double t, Func<double, double, double> u) => 
@@ -71,14 +93,14 @@ namespace EE.NIESolver.Experiments.Experiments
 
             var net = Inject<IMathNetFactory>()
                 .CreateMathNet2()
-                .SetArea(2, 1)
+                .SetArea(2, 4)
                 .SetInitialConditions(Math.Exp)
                 .SetLeftBorder(t => Math.Exp(-t))
                 .SetHistory(1, (x, t) => Math.Exp(x-t))
-                .Build(2d / n, 1d / n);
+                .Build(2d / n, 4d / n);
 
             var method = new SymmetrizedDerivatedMethod(OneSpatialVariable_VariableDelay_ExperimentFunction, new LinearInterpolationService());
-            var solver = new ClassicRunner(method);
+            var solver = new SequentialRunner(method);
 
             solver.Run(net);
 

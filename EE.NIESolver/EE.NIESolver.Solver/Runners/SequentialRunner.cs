@@ -3,11 +3,11 @@ using EE.NIESolver.Solver.Methods;
 
 namespace EE.NIESolver.Solver.Runners
 {
-    public class ClassicRunner : I2Runner
+    public class SequentialRunner : I2Runner
     {
         private readonly I2Method _method;
 
-        public ClassicRunner(I2Method method)
+        public SequentialRunner(I2Method method)
         {
             _method = method;
         }
